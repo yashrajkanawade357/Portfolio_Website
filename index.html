@@ -248,6 +248,36 @@
   }
   @media(hover:none){#cursor-glow{display:none}}
 
+  /* preloader */
+  #preloader{position:fixed;inset:0;z-index:200;background:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;transition:opacity .7s ease,visibility .7s}
+  #preloader.done{opacity:0;visibility:hidden}
+  .pre-ring{width:64px;height:64px;border-radius:50%;border:2px solid var(--hair);border-top-color:var(--gold);border-right-color:var(--teal);animation:spin 1s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .pre-name{font-family:var(--disp);font-weight:800;font-size:1.15rem;letter-spacing:.04em;color:var(--text)}
+  .pre-bar{width:170px;height:2px;background:var(--hair);overflow:hidden;border-radius:2px}
+  .pre-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--teal))}
+  .pre-pct{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--muted)}
+
+  /* typing headline */
+  .type-line{margin-top:16px;font-family:var(--mono);font-size:clamp(.85rem,2vw,1.05rem);color:var(--teal);letter-spacing:.02em;min-height:1.5em;display:flex;align-items:center}
+  .type-line .cursor{display:inline-block;width:9px;height:1.05em;background:var(--gold);margin-left:4px;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  /* 3D viz widgets (orbit + city) */
+  .viz-wrap{position:relative;border:1px solid var(--hair);border-radius:5px;overflow:hidden;background:radial-gradient(120% 120% at 50% 0%,#101a30,#080d18 70%)}
+  .viz-wrap canvas{display:block;width:100%;height:100%;touch-action:pan-y}
+  #orbit{height:380px;cursor:grab}
+  #orbit:active{cursor:grabbing}
+  #city{height:340px}
+  .viz-hint{position:absolute;left:15px;bottom:13px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);pointer-events:none}
+
+  /* wipe transition */
+  #wipe{position:fixed;inset:0;z-index:120;background:linear-gradient(180deg,var(--gold),var(--gold-deep));transform:scaleY(0);transform-origin:bottom;pointer-events:none}
+  #wipe.go{animation:wipe .8s cubic-bezier(.7,0,.3,1) forwards}
+  @keyframes wipe{0%{transform:scaleY(0);transform-origin:bottom}45%{transform:scaleY(1);transform-origin:bottom}55%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(0);transform-origin:top}}
+
+  .btn,.clink{will-change:transform}
+
   /* reveal */
   .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
   .reveal.in{opacity:1;transform:none}
@@ -257,6 +287,13 @@
   }
 </style>
 
+<div id="preloader">
+  <div class="pre-ring"></div>
+  <div class="pre-name">YASHRAJ KANAWADE</div>
+  <div class="pre-bar"><i></i></div>
+  <div class="pre-pct">0%</div>
+</div>
+<div id="wipe"></div>
 <canvas id="galaxy"></canvas>
 <div id="cursor-glow"></div>
 
@@ -266,6 +303,7 @@
     <a href="#about">About</a>
     <a href="#skills">Stack</a>
     <a href="#work">Work</a>
+    <a href="#activity">Activity</a>
     <a href="#creds">Credentials</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -276,6 +314,7 @@
     <div class="hero-coord">VIT VELLORE · <b>VIT'29</b> · B.TECH COMPUTER SCIENCE &amp; ENGINEERING</div>
     <h1>Yashraj<br><span class="l2">Kanawade</span></h1>
     <p class="hero-role">Software Engineer &amp; <b>AI/ML enthusiast</b> — building <b>AI-powered products</b> and full-stack systems, from RAG pipelines to study platforms.</p>
+    <div class="type-line"><span id="typed"></span><span class="cursor"></span></div>
     <div class="cta-row">
       <a class="btn primary" href="#work">Explore my work</a>
       <a class="btn" href="https://vyora-3d282.web.app/" target="_blank" rel="noopener">
@@ -387,6 +426,7 @@
       <p class="prose" style="margin-top:26px;font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--muted)">
         <span style="color:var(--teal)">▲ CURRENTLY LEARNING</span> &nbsp;·&nbsp; Data Structures &amp; Algorithms · JavaScript · Tailwind CSS · Deep Learning · NLP
       </p>
+      <div class="viz-wrap" id="orbitWrap" style="margin-top:32px"><canvas id="orbit"></canvas><div class="viz-hint">◍ Drag to spin · the stack in orbit</div></div>
     </div>
   </div></section>
 
@@ -482,9 +522,22 @@
 
   <hr class="divider" />
 
+  <!-- ACTIVITY -->
+  <section id="activity"><div class="wrap sec-grid">
+    <div class="sec-index"><span class="idx">05</span>ACTIVITY</div>
+    <div class="reveal" style="width:100%">
+      <span class="eyebrow">Always building</span>
+      <h2 class="section-title">The coding <span class="accent">skyline.</span></h2>
+      <p class="prose" style="margin-top:18px">Consistent, hands-on building across 30+ repositories — rendered as a rotating 3D skyline (an illustrative view of an active commit rhythm).</p>
+      <div class="viz-wrap" id="cityWrap" style="margin-top:26px"><canvas id="city"></canvas><div class="viz-hint">◍ Illustrative contribution skyline</div></div>
+    </div>
+  </div></section>
+
+  <hr class="divider" />
+
   <!-- INVOLVEMENT -->
   <section id="involvement"><div class="wrap sec-grid">
-    <div class="sec-index"><span class="idx">05</span>COMMUNITY</div>
+    <div class="sec-index"><span class="idx">06</span>COMMUNITY</div>
     <div class="reveal" style="width:100%">
       <span class="eyebrow">Where I show up</span>
       <h2 class="section-title">Clubs &amp; chapters at VIT.</h2>
@@ -533,6 +586,13 @@
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/MaskPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
 <script>
 (function(){
   // nav scroll state
@@ -577,6 +637,138 @@
       glow.style.opacity='1';
     },{passive:true});
   }
+
+  // preloader
+  var pre=document.getElementById('preloader');
+  if(pre){
+    var pbar=pre.querySelector('.pre-bar i'), ppct=pre.querySelector('.pre-pct');
+    function finishPre(){ pre.classList.add('done'); }
+    if(reduce){ if(pbar)pbar.style.width='100%'; if(ppct)ppct.textContent='100%'; setTimeout(finishPre,250); }
+    else{
+      var pp=0, iv=setInterval(function(){
+        pp+=Math.random()*16+7; if(pp>=100){pp=100;clearInterval(iv);}
+        if(pbar)pbar.style.width=pp+'%'; if(ppct)ppct.textContent=Math.round(pp)+'%';
+      },120);
+      window.addEventListener('load',function(){setTimeout(finishPre,600);});
+      setTimeout(finishPre,4200); // safety
+    }
+  }
+
+  // typing headline
+  (function(){
+    var el=document.getElementById('typed'); if(!el) return;
+    var phrases=['Software Engineer','AI & Machine Learning Enthusiast','Java • Python • C++ Developer','Building AI-powered products','RAG • LoRA • Transformers','Full-Stack Developer'];
+    if(reduce){ el.textContent=phrases[0]; return; }
+    var pi=0,ci=0,del=false;
+    function tick(){
+      var w=phrases[pi]; el.textContent=w.substring(0,ci);
+      if(!del){ ci++; if(ci>w.length){ del=true; setTimeout(tick,1500); return; } }
+      else{ ci--; if(ci<0){ del=false; ci=0; pi=(pi+1)%phrases.length; } }
+      setTimeout(tick, del?40:80);
+    }
+    tick();
+  })();
+
+  // magnetic buttons + links
+  if(!reduce){
+    document.querySelectorAll('.btn, .clink').forEach(function(b){
+      b.addEventListener('pointermove',function(e){
+        var r=b.getBoundingClientRect();
+        var mx=e.clientX-(r.left+r.width/2), my=e.clientY-(r.top+r.height/2);
+        b.style.transform='translate('+(mx*0.22)+'px,'+(my*0.3)+'px)';
+      });
+      b.addEventListener('pointerleave',function(){ b.style.transform=''; });
+    });
+  }
+
+  // nav wipe transitions
+  var wipe=document.getElementById('wipe');
+  document.querySelectorAll('.navlinks a').forEach(function(a){
+    a.addEventListener('click',function(ev){
+      var id=a.getAttribute('href'); if(!id||id.charAt(0)!=='#') return;
+      var tgt=document.querySelector(id); if(!tgt||reduce||!wipe) return;
+      ev.preventDefault();
+      wipe.classList.remove('go'); void wipe.offsetWidth; wipe.classList.add('go');
+      setTimeout(function(){ tgt.scrollIntoView(); }, 370);
+    });
+  });
+
+  // ---- interactive tech-orbit ----
+  function initOrbit(){
+    var cv=document.getElementById('orbit'); if(!cv||!window.THREE) return;
+    var w=cv.clientWidth||600, h=cv.clientHeight||380;
+    var r; try{ r=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true}); }catch(e){ return; }
+    r.setPixelRatio(Math.min(devicePixelRatio,2)); r.setSize(w,h,false);
+    var sc=new THREE.Scene();
+    var cam=new THREE.PerspectiveCamera(50,w/h,0.1,100); cam.position.z=6.6;
+    var grp=new THREE.Group(); sc.add(grp);
+    grp.add(new THREE.Mesh(new THREE.IcosahedronGeometry(2.05,1),
+      new THREE.MeshBasicMaterial({color:0x22304e,wireframe:true,transparent:true,opacity:0.55})));
+    grp.add(new THREE.Mesh(new THREE.SphereGeometry(1.15,24,24),
+      new THREE.MeshBasicMaterial({color:0xffc857,transparent:true,opacity:0.05})));
+    var labels=['Python','Java','C++','JavaScript','TypeScript','Spring Boot','Flask','PostgreSQL','Docker','Kubernetes','Pandas','Scikit-Learn','RAG','LoRA','PEFT','Transformers','LangChain','Hugging Face','Supabase','Git'];
+    var cols=['#ffc857','#5eead4','#ff8b3d','#eef2ff'];
+    function labelSprite(text,color){
+      var fs=44, pad=20, c=document.createElement('canvas'), x=c.getContext('2d');
+      x.font='700 '+fs+'px Manrope, sans-serif'; var tw=x.measureText(text).width;
+      c.width=Math.ceil(tw+pad*2); c.height=fs+pad; x=c.getContext('2d');
+      x.font='700 '+fs+'px Manrope, sans-serif'; x.textBaseline='middle';
+      x.shadowColor=color; x.shadowBlur=12; x.fillStyle=color; x.fillText(text,pad,c.height/2);
+      var tex=new THREE.CanvasTexture(c); tex.minFilter=THREE.LinearFilter;
+      var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthWrite:false}));
+      sp.scale.set(c.width/c.height*0.62,0.62,1); return sp;
+    }
+    var R=2.75, N=labels.length;
+    for(var i=0;i<N;i++){
+      var y=1-(i/(N-1))*2, rad=Math.sqrt(Math.max(0,1-y*y)), th=Math.PI*(3-Math.sqrt(5))*i;
+      var sp=labelSprite(labels[i],cols[i%cols.length]);
+      sp.position.set(Math.cos(th)*rad*R, y*R, Math.sin(th)*rad*R); grp.add(sp);
+    }
+    var drag=false,lx=0,ly=0;
+    cv.addEventListener('pointerdown',function(e){drag=true;lx=e.clientX;ly=e.clientY;cv.setPointerCapture&&cv.setPointerCapture(e.pointerId);});
+    cv.addEventListener('pointerup',function(){drag=false;});
+    cv.addEventListener('pointermove',function(e){ if(!drag)return; grp.rotation.y+=(e.clientX-lx)*0.006; grp.rotation.x+=(e.clientY-ly)*0.006; lx=e.clientX; ly=e.clientY; });
+    var vis=true; new IntersectionObserver(function(es){vis=es[0].isIntersecting;},{threshold:0.02}).observe(cv);
+    function loop(){ requestAnimationFrame(loop); if(!vis)return; if(!drag&&!reduce){grp.rotation.y+=0.003; grp.rotation.x+=0.0008;} r.render(sc,cam); }
+    loop();
+    window.addEventListener('resize',function(){ var nw=cv.clientWidth,nh=cv.clientHeight; if(nw&&nh){cam.aspect=nw/nh;cam.updateProjectionMatrix();r.setSize(nw,nh,false);} });
+  }
+
+  // ---- 3D activity skyline ----
+  function initCity(){
+    var cv=document.getElementById('city'); if(!cv||!window.THREE) return;
+    var w=cv.clientWidth||600, h=cv.clientHeight||340;
+    var r; try{ r=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true}); }catch(e){ return; }
+    r.setPixelRatio(Math.min(devicePixelRatio,2)); r.setSize(w,h,false);
+    var sc=new THREE.Scene();
+    var cam=new THREE.PerspectiveCamera(42,w/h,0.1,300); cam.position.set(0,25,40); cam.lookAt(0,1,0);
+    var WK=52, DY=7, count=WK*DY;
+    var mesh=new THREE.InstancedMesh(new THREE.BoxGeometry(0.78,1,0.78), new THREE.MeshBasicMaterial({color:0xffffff}), count);
+    var dummy=new THREE.Object3D(), color=new THREE.Color();
+    var cGold=new THREE.Color(0xffc857), cTeal=new THREE.Color(0x5eead4), cDim=new THREE.Color(0x16233d);
+    var heights=[]; for(var i=0;i<count;i++){ var b=Math.random(); var lvl=b<0.42?0:b<0.68?0.32:b<0.87?0.62:1; heights.push(0.12+lvl*4.4); }
+    var grp=new THREE.Group(); grp.add(mesh); sc.add(grp);
+    function place(t){
+      var i=0;
+      for(var wk=0;wk<WK;wk++) for(var d=0;d<DY;d++){
+        var bh=heights[i];
+        var wave=reduce?0:Math.sin(t*1.3+wk*0.28+d*0.5)*0.28*(bh>0.6?1:0.15);
+        var hgt=Math.max(0.1,bh+wave);
+        dummy.position.set((wk-WK/2)*0.92, hgt/2, (d-DY/2)*0.92);
+        dummy.scale.set(1,hgt,1); dummy.updateMatrix(); mesh.setMatrixAt(i,dummy.matrix);
+        var f=Math.min(1,hgt/4.6); color.copy(cDim).lerp(f>0.62?cGold:cTeal,f); mesh.setColorAt(i,color);
+        i++;
+      }
+      mesh.instanceMatrix.needsUpdate=true; if(mesh.instanceColor) mesh.instanceColor.needsUpdate=true;
+    }
+    var vis=true; new IntersectionObserver(function(es){vis=es[0].isIntersecting;},{threshold:0.02}).observe(cv);
+    var clk=new THREE.Clock();
+    function loop(){ requestAnimationFrame(loop); if(!vis)return; var t=clk.getElapsedTime(); if(!reduce) grp.rotation.y=Math.sin(t*0.14)*0.42; place(t); r.render(sc,cam); }
+    loop();
+    window.addEventListener('resize',function(){ var nw=cv.clientWidth,nh=cv.clientHeight; if(nw&&nh){cam.aspect=nw/nh;cam.updateProjectionMatrix();r.setSize(nw,nh,false);} });
+  }
+
+  initOrbit(); initCity();
 
   // ---- WebGL galaxy ----
   var canvas=document.getElementById('galaxy');
@@ -715,6 +907,20 @@
     tx=(e.clientX/window.innerWidth-0.5); ty=(e.clientY/window.innerHeight-0.5);
   },{passive:true});
 
+  // bloom post-processing (graceful fallback to direct render)
+  var composer=null, useBloom=false;
+  try{
+    if(THREE.EffectComposer && THREE.RenderPass && THREE.UnrealBloomPass){
+      composer=new THREE.EffectComposer(renderer);
+      composer.addPass(new THREE.RenderPass(scene,camera));
+      var bloom=new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth,window.innerHeight),0.85,0.55,0.15);
+      composer.addPass(bloom);
+      composer.setSize(window.innerWidth,window.innerHeight);
+      composer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+      useBloom=true;
+    }
+  }catch(e){ useBloom=false; }
+
   var clock=new THREE.Clock();
   function render(){
     var t=clock.getElapsedTime();
@@ -748,7 +954,7 @@
     camera.position.x = cx*3.4;
     camera.position.y = camY - cy*2.2;
     camera.lookAt(cx*1.2, camY - 1.0, 0);
-    renderer.render(scene,camera);
+    if(useBloom){ composer.render(); } else { renderer.render(scene,camera); }
     raf=requestAnimationFrame(render);
   }
   render();
@@ -756,6 +962,7 @@
   window.addEventListener('resize',function(){
     camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth,window.innerHeight);
+    if(useBloom){ composer.setSize(window.innerWidth,window.innerHeight); }
   });
 
   // pause when tab hidden
