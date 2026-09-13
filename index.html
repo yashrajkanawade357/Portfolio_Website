@@ -5,6 +5,16 @@
 <meta property="og:title" content="Yashraj Kanawade — Software Engineer & AI/ML Enthusiast" />
 <meta property="og:description" content="B.Tech CSE @ VIT. Building AI-powered products and full-stack systems." />
 <meta property="og:type" content="website" />
+<meta property="og:url" content="https://yashrajkanawadeportfolio.netlify.app/" />
+<meta property="og:image" content="https://yashrajkanawadeportfolio.netlify.app/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Yashraj Kanawade — Software Engineer & AI/ML Enthusiast" />
+<meta name="twitter:description" content="B.Tech CSE @ VIT. Building AI-powered products and full-stack systems." />
+<meta name="twitter:image" content="https://yashrajkanawadeportfolio.netlify.app/og-image.png" />
+<meta name="theme-color" content="#070a14" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%23070a14'/%3E%3Ctext%20x='32'%20y='45'%20font-family='Arial,sans-serif'%20font-size='31'%20font-weight='bold'%20text-anchor='middle'%20fill='%23ffc857'%3EYK%3C/text%3E%3C/svg%3E" />
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Yashraj Kanawade","url":"https://github.com/yashrajkanawade357","sameAs":["https://www.linkedin.com/in/yashraj-kanawade-289039223/","https://github.com/yashrajkanawade357","https://vyora-3d282.web.app/"],"email":"yashrajkanawade357@gmail.com","jobTitle":"Software Engineer & AI/ML Enthusiast","alumniOf":{"@type":"CollegeOrUniversity","name":"Vellore Institute of Technology"},"knowsAbout":["Artificial Intelligence","Machine Learning","Data Analytics","Java","Python","C++","Spring Boot","RAG","LoRA","PEFT","Transformers","Hugging Face","Prompt Engineering"]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -278,6 +288,23 @@
 
   .btn,.clink{will-change:transform}
 
+  /* accessibility */
+  .skip{position:fixed;left:14px;top:-60px;z-index:210;background:var(--gold);color:#1a1300;font-family:var(--mono);font-size:12px;font-weight:700;padding:10px 16px;border-radius:3px;transition:top .2s}
+  .skip:focus{top:14px}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+  .proj:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+
+  /* back to top */
+  #toTop{
+    position:fixed;right:22px;bottom:22px;z-index:55;width:46px;height:46px;border-radius:50%;
+    border:1px solid var(--panel-line);background:rgba(14,21,38,.85);backdrop-filter:blur(8px);
+    color:var(--gold);font-size:20px;line-height:1;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;visibility:hidden;transform:translateY(12px);transition:.3s;
+  }
+  #toTop.show{opacity:1;visibility:visible;transform:none}
+  #toTop:hover{border-color:var(--gold);box-shadow:0 0 18px -4px var(--gold)}
+
   /* reveal */
   .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
   .reveal.in{opacity:1;transform:none}
@@ -287,6 +314,7 @@
   }
 </style>
 
+<a href="#about" class="skip">Skip to content</a>
 <div id="preloader">
   <div class="pre-ring"></div>
   <div class="pre-name">YASHRAJ KANAWADE</div>
@@ -318,15 +346,15 @@
     <div class="cta-row">
       <a class="btn primary" href="#work">Explore my work</a>
       <a class="btn" href="https://vyora-3d282.web.app/" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
         Live: Vyora
       </a>
       <a class="btn" href="https://github.com/yashrajkanawade357" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.82 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.82 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
         GitHub
       </a>
       <a class="btn" href="https://www.linkedin.com/in/yashraj-kanawade-289039223/" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z"/></svg>
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z"/></svg>
         LinkedIn
       </a>
     </div>
@@ -560,27 +588,29 @@
     </div>
     <div class="links reveal">
       <a class="clink" href="mailto:yashrajkanawade357@gmail.com">
-        <span class="lk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg> yashrajkanawade357@gmail.com</span>
+        <span class="lk"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg> yashrajkanawade357@gmail.com</span>
         <span class="arrow">→</span>
       </a>
       <a class="clink" href="https://github.com/yashrajkanawade357" target="_blank" rel="noopener">
-        <span class="lk"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.82 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg> GitHub</span>
+        <span class="lk"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.82 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg> GitHub</span>
         <span class="arrow">→</span>
       </a>
       <a class="clink" href="https://www.linkedin.com/in/yashraj-kanawade-289039223/" target="_blank" rel="noopener">
-        <span class="lk"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z"/></svg> LinkedIn</span>
+        <span class="lk"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z"/></svg> LinkedIn</span>
         <span class="arrow">→</span>
       </a>
       <a class="clink" href="https://vyora-3d282.web.app/" target="_blank" rel="noopener">
-        <span class="lk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg> Vyora — live demo</span>
+        <span class="lk"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg> Vyora — live demo</span>
         <span class="arrow">→</span>
       </a>
       <a class="clink" href="https://github.com/yashrajkanawade357?tab=repositories" target="_blank" rel="noopener">
-        <span class="lk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg> Browse repositories</span>
+        <span class="lk"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg> Browse repositories</span>
         <span class="arrow">→</span>
       </a>
     </div>
   </div></section>
+
+  <button id="toTop" aria-label="Back to top">↑</button>
 
   <footer><div class="wrap foot">
     <span>© 2026 YASHRAJ KANAWADE</span>
@@ -640,6 +670,13 @@
       glow.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)';
       glow.style.opacity='1';
     },{passive:true});
+  }
+
+  // back to top
+  var toTop=document.getElementById('toTop');
+  if(toTop){
+    window.addEventListener('scroll',function(){ toTop.classList.toggle('show',window.scrollY>640); },{passive:true});
+    toTop.addEventListener('click',function(){ window.scrollTo({top:0,behavior:reduce?'auto':'smooth'}); });
   }
 
   // preloader
