@@ -195,6 +195,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .lines > * { display: grid; grid-template-columns: 1.3fr 1fr auto; gap: 14px; align-items: baseline; padding: 14px 0; border-top: 1px solid var(--line); }
 .lines > *:last-child { border-bottom: 1px solid var(--line); }
 .lines .t { font-weight: 600; font-size: 15px; }
+.lines .d { display: block; margin-top: 4px; font-size: 13px; font-weight: 400; line-height: 1.45; }
 .focus-row { display: grid; grid-template-columns: 44px 1fr 1.3fr; gap: 14px; align-items: baseline; padding: 16px 0; border-top: 1px solid var(--line); }
 .focus-row:last-child { border-bottom: 1px solid var(--line); }
 .focus-row h3 { font-size: max(26px, 3.4cqw); }

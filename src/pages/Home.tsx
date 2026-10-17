@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
-import { communities, experience, focus, hackathons, numbers, person, projects } from "../data"
+import { communities, focus, numbers, person, projects } from "../data"
 import { CountUp, Reveal, useTitle } from "../components/ui"
-import { ProjectCard } from "./parts"
+import { ProjectCard, Timeline } from "./parts"
 
 export default function Home() {
   useTitle("")
@@ -53,12 +53,7 @@ export default function Home() {
       </section>
 
       <section className="sec light">
-        <p className="label muted" style={{ marginBottom: 14 }}>Experience & hackathons</p>
-        <div className="lines">
-          {[...experience, ...hackathons].map((e) => (
-            <div key={e.title + e.org}><span className="t">{e.title}</span><span className="o muted">{e.org}</span><span className="label muted">{e.when}</span></div>
-          ))}
-        </div>
+        <Timeline />
       </section>
 
       <section className="sec light">
