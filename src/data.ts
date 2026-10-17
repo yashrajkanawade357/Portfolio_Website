@@ -126,10 +126,28 @@ export const numbers = [
 ]
 
 export const focus = [
-  { title: "Software Engineering", text: "Backend, APIs, databases and application architecture: software that stays reliable as it grows." },
-  { title: "AI & Machine Learning", text: "From EDA and regression to deep learning and NLP, with models built into real applications." },
-  { title: "Quantum Cryptography", text: "Quantum key distribution and the maths and physics behind secure communication. An independent exploration." },
-  { title: "Cloud & Systems", text: "The tools and infrastructure that keep software running beyond a local machine." },
+  { title: "Software Engineering",
+    text: "Moving past code that only works, toward systems that are well-structured, reliable and scalable.",
+    topics: ["Data structures & algorithms", "Object-oriented design", "Backend & REST APIs", "Databases", "Application architecture", "Clean, testable code"] },
+  { title: "AI & Machine Learning",
+    text: "The whole pipeline: framing the problem, cleaning and exploring data, features, training, evaluation and interpretation.",
+    topics: ["EDA & data cleaning", "Feature engineering", "Supervised learning", "Model evaluation", "Transformers", "RAG", "Prompt engineering", "Fine-tuning (PEFT, LoRA)"] },
+  { title: "Where they meet",
+    text: "I'm working toward the middle point between software engineering and AI: AI architecture, NLP and deep learning, built into software that holds up in real use.",
+    topics: ["AI system architecture", "NLP", "Deep learning", "Tokenization & embeddings", "LLM apps & agents", "Voice agents"] },
+  { title: "Cloud & Systems",
+    text: "The tools and infrastructure that keep software running beyond a local machine.",
+    topics: ["Containers", "Deployment", "Version control", "Operating systems"] },
+]
+
+export const skills = [
+  { group: "Languages", items: ["Python", "Java", "C++", "C", "JavaScript", "TypeScript"] },
+  { group: "AI / ML", items: ["NumPy", "Pandas", "Matplotlib", "Seaborn", "Scikit-learn", "PyTorch", "Hugging Face", "LangChain", "LangGraph", "RAG", "PEFT · LoRA · QLoRA"] },
+  { group: "Backend & data", items: ["Spring Boot", "FastAPI", "Flask", "REST APIs", "PostgreSQL", "Supabase"] },
+  { group: "Web", items: ["React", "HTML", "CSS", "Tailwind CSS", "Three.js"] },
+  { group: "DevOps & tools", items: ["Docker", "Kubernetes", "Git", "GitHub", "VS Code", "Cursor", "Jupyter", "Google Colab", "Kaggle", "Vercel", "Netlify"] },
+  { group: "Design", items: ["Canva", "DaVinci Resolve", "Filmora"] },
+  { group: "Currently learning", items: ["DSA", "Deep learning", "NLP", "Software engineering principles"] },
 ]
 
 export const experience = [
@@ -178,7 +196,7 @@ export const about = [
   { h: "Who I am", p: "I'm a Computer Science and Engineering student at VIT Vellore, graduating in 2029. I enjoy understanding how technology works, exploring new ideas, and building things that solve real problems. For me, computer science is a field where creativity meets logic, and every new concept opens the door to something bigger." },
   { h: "Software engineering", p: "I want to move beyond code that simply works and learn to build systems that are well-structured, reliable and scalable: backend development, APIs, databases and application architecture. Good engineering isn't about the most complicated technology; it's about thoughtful decisions and building something that genuinely serves its purpose." },
   { h: "AI & machine learning", p: "Building a model is much more than calling a training function. It starts with the problem and the data, and runs through cleaning, feature selection, training, evaluation and interpretation. I want to combine machine learning with well-designed software so the result is both intelligent and useful." },
-  { h: "Quantum cryptography", p: "It sits where quantum physics, mathematics and security meet. I'm drawn to quantum key distribution and to how quantum measurement can reveal interception. It's a long-term direction I'm building toward steadily, alongside my fundamentals." },
+  { h: "Where the two meet", p: "What I'm really after is the middle point between software engineering and AI: AI architecture, NLP and deep learning, designed and built into software that holds up in real use. A model is only as useful as the system around it, so I'm learning both sides together." },
   { h: "Beyond the classroom", p: "Through TAM, SIAM, Bulls & Bears, E-Cell and the AWS Student Builder Group, I've worked with people from different backgrounds, on web tasks and on promotional design. Contributing to a team takes more than technical knowledge: it takes clear communication, owning responsibilities and adapting when plans change." },
   { h: "How I build", p: "A project starts with a question: what problem am I solving, who benefits, and what's the simplest useful version? Then I break it into steps and build. Debugging is part of the craft; errors usually reveal an assumption worth rethinking." },
 ]

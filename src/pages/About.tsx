@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom"
-import { about, communities, focus, numbers, person } from "../data"
+import { about, communities, numbers, person } from "../data"
 import { CountUp, Reveal, useTitle } from "../components/ui"
 import { Cta, Foot } from "./Home"
-import { Timeline } from "./parts"
+import { Focus, Skills, Timeline } from "./parts"
 
 export default function About() {
   useTitle("About")
@@ -13,7 +13,7 @@ export default function About() {
         <div>
           <p className="label muted">About</p>
           <h1 className="display">Stay curious,<br /><span className="accent">keep building.</span></h1>
-          <p className="lead">I'm {person.name}, a Computer Science and Engineering student at VIT Vellore, graduating in 2029. I enjoy understanding how technology works and building things that solve real problems, with a focus on software engineering and AI/ML and a growing interest in quantum cryptography.</p>
+          <p className="lead">I'm {person.name}, a Computer Science and Engineering student at VIT Vellore, graduating in 2029. I enjoy understanding how technology works and building things that solve real problems, with a focus on software engineering and AI/ML, and the middle point between them: AI architecture, NLP and deep learning.</p>
           <div className="row" style={{ marginTop: 22 }}><Link className="btn btn-pulse" to="/contact">Let's connect ↗</Link></div>
         </div>
       </section>
@@ -35,12 +35,11 @@ export default function About() {
       </section>
 
       <section className="sec light">
-        <p className="label muted" style={{ marginBottom: 14 }}>What I'm focused on</p>
-        {focus.map((f, i) => (
-          <div key={f.title} className="focus-row">
-            <span className="label muted">{String(i + 1).padStart(2, "0")}</span><h3 className="display">{f.title}</h3><p>{f.text}</p>
-          </div>
-        ))}
+        <Focus />
+      </section>
+
+      <section className="sec light">
+        <Skills />
       </section>
 
       <section className="sec light">

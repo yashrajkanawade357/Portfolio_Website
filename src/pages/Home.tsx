@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
-import { communities, focus, numbers, person, projects } from "../data"
+import { communities, numbers, person, projects } from "../data"
 import { CountUp, Reveal, useTitle } from "../components/ui"
-import { ProjectCard, Timeline } from "./parts"
+import { Focus, ProjectCard, Skills, Timeline } from "./parts"
 
 export default function Home() {
   useTitle("")
@@ -42,14 +42,11 @@ export default function Home() {
       </section>
 
       <section className="sec light">
-        <p className="label muted" style={{ marginBottom: 14 }}>What I'm focused on</p>
-        {focus.map((f, i) => (
-          <Reveal key={f.title} className="focus-row">
-            <span className="label muted">{String(i + 1).padStart(2, "0")}</span>
-            <h3 className="display">{f.title}</h3>
-            <p>{f.text}</p>
-          </Reveal>
-        ))}
+        <Focus reveal />
+      </section>
+
+      <section className="sec light">
+        <Skills />
       </section>
 
       <section className="sec light">
