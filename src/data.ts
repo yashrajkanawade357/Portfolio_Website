@@ -184,6 +184,13 @@ export const hackathons: { title: string; org: string; when?: string }[] = [
   { title: "Adobe Hackathon", org: "Adobe" },
   { title: "ForgeAI", org: "graVITas'26 · VIT × HCLTech", when: "2026" },
   { title: "Smart India Hackathon", org: "Project Sindhu · PS SIH26015", when: "2026" },
+  { title: "Cipher.cli", org: "Yantra'26 · ISTE VIT", when: "2026" },
+  { title: "Build & Beyond", org: "Whitehats Club · VIT", when: "2026" },
+]
+
+export const conferences = [
+  { title: "International Seminar — Digital Dreamscapes", org: "VIT × Ministry of Youth Affairs & Sports, Govt. of India", when: "Mar 2026",
+    detail: "Youth Navigating AI, Creativity & Virtual Expression. Awarded a certificate and swag by VIT and the Government of India." },
 ]
 
 export const communities = ["The AI & ML Club (TAM)", "Bulls & Bears", "AWS Student Builders", "E-Cell VIT", "SIAM"]
@@ -194,7 +201,7 @@ export const certificates = [
   { title: "ForgeAI — graVITas'26", issuer: "VIT × HCLTech", kind: "Hackathon", img: C + "forgeai-gravitas-26.webp" },
   { title: "Solution Challenge 2026", issuer: "Build with AI · Hack2skill", kind: "Hackathon", img: C + "h2s-solution-challenge-2026.webp" },
   { title: "Yantra'26 — Cipher.cli", issuer: "ISTE · VIT", kind: "Hackathon", img: C + "iste-yantra-26-cipher-cli.webp" },
-  { title: "Digital Dreamscapes", issuer: "International Seminar · VIT", kind: "Event", img: C + "vit-digital-dreamscapes.webp" },
+  { title: "Digital Dreamscapes — International Seminar", issuer: "VIT × Govt. of India (MoYAS)", kind: "Event", img: C + "vit-digital-dreamscapes.webp" },
   { title: "AI Job Bridge Program", issuer: "Unlox", kind: "AI", img: C + "unlox-ai-job-bridge.webp" },
   { title: "Spring Boot 4, Spring 7 & Hibernate", issuer: "Udemy", kind: "Development", img: C + "udemy-spring-boot-hibernate.webp" },
   { title: "The Complete SQL Bootcamp", issuer: "Udemy", kind: "Data", img: C + "udemy-sql-bootcamp.webp" },

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { experience, focus, hackathons, skills, type Project } from "../data"
+import { conferences, experience, focus, hackathons, skills, type Project } from "../data"
 import { Reveal } from "../components/ui"
 
 export function ProjectCard({ p }: { p: Project }) {
@@ -16,7 +16,7 @@ export function ProjectCard({ p }: { p: Project }) {
   )
 }
 
-/* experience and hackathons, as two separate lists */
+/* experience, hackathons and conferences, as separate lists */
 export function Timeline() {
   return (
     <>
@@ -33,6 +33,15 @@ export function Timeline() {
       <div className="lines">
         {hackathons.map((e) => (
           <div key={e.title + e.org}><span className="t">{e.title}</span><span className="o muted">{e.org}</span><span className="label muted">{e.when ?? ""}</span></div>
+        ))}
+      </div>
+      <p className="label muted" style={{ margin: "34px 0 14px" }}>Conferences</p>
+      <div className="lines">
+        {conferences.map((e) => (
+          <div key={e.title}>
+            <span className="t">{e.title}<small className="d muted">{e.detail}</small></span>
+            <span className="o muted">{e.org}</span><span className="label muted">{e.when}</span>
+          </div>
         ))}
       </div>
     </>
