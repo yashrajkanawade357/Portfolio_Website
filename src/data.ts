@@ -133,13 +133,13 @@ export const focus = [
 ]
 
 export const experience = [
-  { title: "Core Member — Technical Domain", org: "AWS Student Builder Group · VIT", when: "Oct 2026 — now",
+  { title: "Executive Core Member — Technical Domain", org: "AWS Student Builder Group · VIT", when: "Oct 2026 — now",
     detail: "Web development and AI/ML applications: automated systems and voice agents." },
-  { title: "Core Member — Outreach Domain", org: "AWS Student Builder Group · VIT", when: "Oct 2026 — now",
+  { title: "Executive Core Member — Outreach Domain", org: "AWS Student Builder Group · VIT", when: "Oct 2026 — now",
     detail: "Outreach and industry connects for the chapter." },
-  { title: "Core Member — Technical Domain", org: "E-Cell VIT", when: "Sep 2026 — now",
+  { title: "Executive Core Member — Technical Domain", org: "E-Cell VIT", when: "Sep 2026 — now",
     detail: "Web development for E-Cell's sites and event platforms." },
-  { title: "Core Member — Outreach & Design", org: "Bulls & Bears · VIT", when: "Dec 2025 — Sep 2026",
+  { title: "Executive Core Member — Outreach & Design", org: "Bulls & Bears · VIT", when: "Dec 2025 — Sep 2026",
     detail: "Outreach and promotional design for the club." },
 ]
 
