@@ -18,7 +18,7 @@ export default function Home() {
           </div>
         </div>
         <figure className="intro-photo">
-          <img src="/media/photos/portrait-closeup.jpg" alt="Yashraj Kanawade smiling, standing by a wall of potted plants" />
+          <img src="/media/photos/portrait-closeup.webp" alt="Yashraj Kanawade smiling, standing by a wall of potted plants" />
         </figure>
       </section>
 

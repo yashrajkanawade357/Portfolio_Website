@@ -89,8 +89,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 .screen { position: absolute; overflow: clip; background: var(--screen); transform: translateZ(2px); }
 .screen-content { position: absolute; left: 0; top: 0; width: 100%; container-type: inline-size; container-name: screen; }
-.crease { position: absolute; top: 0; bottom: 0; left: 50%; width: 22px; translate: -50% 0; pointer-events: none; z-index: 5;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.025) 42%, rgba(0,0,0,.07) 50%, rgba(255,255,255,.02) 58%, transparent); }
 .statusbar {
   position: absolute; inset: 0 0 auto 0; height: 30px; z-index: 6; display: flex; align-items: center; justify-content: space-between;
   padding: 0 16px; font: 500 11px var(--mono); color: #fff; mix-blend-mode: difference; pointer-events: none;

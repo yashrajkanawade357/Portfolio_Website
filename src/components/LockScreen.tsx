@@ -9,7 +9,7 @@ export default function LockScreen({ onUnfold, style }: { onUnfold: () => void; 
   const { time, date } = useClock()
   return (
     <div className="lock" style={style}>
-      <img className="lock-photo" src="/media/photos/portrait-studio.jpg" alt="" />
+      <img className="lock-photo" src="/media/photos/portrait-studio.webp" alt="" />
       <div className="lock-shade" />
       <div className="lock-inner">
         <div className="lock-date">{date}</div>

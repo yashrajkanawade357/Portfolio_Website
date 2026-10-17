@@ -65,7 +65,7 @@ export default function Contact() {
               </form>
             )}
           </div>
-          <figure className="contact-photo"><img src="/media/photos/contact-hero.jpg" alt="Yashraj Kanawade with arms open, smiling" /></figure>
+          <figure className="contact-photo"><img src="/media/photos/contact-hero.webp" alt="Yashraj Kanawade with arms open, smiling" /></figure>
         </div>
       </section>
       <Foot />

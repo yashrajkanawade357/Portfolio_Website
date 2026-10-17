@@ -38,7 +38,7 @@ export const projects: Project[] = [
   {
     slug: "vyora", number: "01", title: "Vyora", category: "Web app", client: "Personal product", year: "2026",
     role: "Full-stack · Product design", accent: "#7c3aed", live: "https://vyora-3d282.web.app/",
-    cover: P + "01-vyora.jpg", still: P + "01-vyora-still.jpg",
+    cover: P + "01-vyora.webp", still: P + "01-vyora-still.webp",
     summary: "An AI-powered study platform that tracks your habits, plans your week and turns studying into a streak worth keeping.",
     body: [
       "Vyora is an AI-powered study platform that tracks your habits, optimises your schedule and gamifies the road to academic excellence.",
@@ -49,7 +49,7 @@ export const projects: Project[] = [
   {
     slug: "terra-flow", number: "02", title: "Terra-Flow", category: "Web app", client: "Personal project", year: "2026",
     role: "Frontend · Data visualisation", accent: "#3458dc", live: "https://terraflow-six.vercel.app/",
-    cover: P + "02-terraflow.jpg", still: P + "02-terraflow-still.jpg",
+    cover: P + "02-terraflow.webp", still: P + "02-terraflow-still.webp",
     summary: "An urban-intelligence dashboard for Bengaluru: congestion, property, livability and investment signals in one view.",
     body: [
       "Terra-Flow is a smart-city analytics platform for the Bangalore metro region. One live overview brings the city's signals together: a congestion index, average property prices, a livability score, an investment grade and the daily economic cost of traffic.",
@@ -60,7 +60,7 @@ export const projects: Project[] = [
   {
     slug: "project-sindhu", number: "03", title: "Project Sindhu", category: "Civic tech", client: "Smart India Hackathon 2026", year: "2026",
     role: "Full-stack · GIS", accent: "#16803d", live: "https://sindhu-qp4o.onrender.com/",
-    cover: P + "03-sindhu.jpg", still: P + "03-sindhu-still.jpg",
+    cover: P + "03-sindhu.webp", still: P + "03-sindhu-still.webp",
     summary: "Satellite-verified watershed intelligence: evidence of whether a water structure actually worked.",
     body: [
       "Built for Smart India Hackathon 2026 (PS SIH26015). Sindhu combines AI, GIS, satellite imagery and field data to monitor watershed interventions, detect change and deliver evidence you can trust, structure by structure.",
@@ -72,7 +72,7 @@ export const projects: Project[] = [
   {
     slug: "ai-gym-unlox", number: "04", title: "AI Gym — Unlox", category: "AI / ML", client: "Unlox · 5-month AI/ML training", year: "2026",
     role: "AI · Full-stack", accent: "#ff5a1f",
-    cover: P + "04-ai-gym-unlox.jpg", still: P + "04-ai-gym-unlox-still.jpg",
+    cover: P + "04-ai-gym-unlox.webp", still: P + "04-ai-gym-unlox-still.webp",
     summary: "An AI gym companion: workout modules and a coach that adapts to your routine.",
     body: [
       "An AI gym and fitness companion, built during my five-month AI/ML training with the Unlox team (AI Job Bridge Program).",
@@ -83,7 +83,7 @@ export const projects: Project[] = [
   {
     slug: "cipher-cli", number: "05", title: "Cipher.cli", category: "Web3", client: "Yantra'26 · ISTE VIT", year: "2026",
     role: "Developer", accent: "#f5c518",
-    cover: P + "05-cipher-cli.jpg", still: P + "05-cipher-cli-still.jpg",
+    cover: P + "05-cipher-cli.webp", still: P + "05-cipher-cli-still.webp",
     summary: "A command-line tool for transparent, decentralized systems: verifiability you can run from a terminal.",
     body: [
       "Cipher.cli brings Web3 transparency to the command line, for building and checking decentralized systems where every record can be verified instead of trusted.",
@@ -94,7 +94,7 @@ export const projects: Project[] = [
   {
     slug: "ai-ml-lab", number: "06", title: "AI / ML Lab", category: "AI / ML", client: "Self-directed", year: "2026",
     role: "Research · Engineering", accent: "#2fcb68",
-    cover: P + "06-ai-ml-lab.jpg", still: P + "06-ai-ml-lab-still.jpg",
+    cover: P + "06-ai-ml-lab.webp", still: P + "06-ai-ml-lab-still.webp",
     summary: "A hands-on run through the modern AI stack, from regression to RAG and LoRA fine-tuning.",
     body: [
       "A collection of working projects that take the AI stack apart piece by piece: retrieval-augmented generation, LoRA, QLoRA and PEFT fine-tuning, Transformer and GPT internals, LangChain and LangGraph agents, Hugging Face pipelines and a chatbot.",
@@ -105,7 +105,7 @@ export const projects: Project[] = [
   {
     slug: "ledgersentinel", number: "07", title: "LedgerSentinel", category: "AI / ML", client: "24-hour hackathon · team of three", year: "2026",
     role: "Backend · Supabase · UX", accent: "#2563eb", live: "https://ledgersentinel-hq.web.app/",
-    cover: P + "07-ledgersentinel.jpg", still: P + "07-ledgersentinel-still.jpg",
+    cover: P + "07-ledgersentinel.webp", still: P + "07-ledgersentinel-still.webp",
     summary: "Fraud detection with bounded autonomy: the model raises signals, a policy gate makes the call.",
     body: [
       "LedgerSentinel catches social-engineering fraud by reading a transaction together with the conversation around it, because the transaction is not always the whole story.",
@@ -151,22 +151,22 @@ export const communities = ["The AI & ML Club (TAM)", "Bulls & Bears", "AWS Stud
 
 const C = "/media/certificates/"
 export const certificates = [
-  { title: "Google AI Essentials", issuer: "Google · Coursera", kind: "AI", img: C + "google-ai-essentials.jpg" },
-  { title: "ForgeAI — graVITas'26", issuer: "VIT × HCLTech", kind: "Hackathon", img: C + "forgeai-gravitas-26.jpg" },
-  { title: "Solution Challenge 2026", issuer: "Build with AI · Hack2skill", kind: "Hackathon", img: C + "h2s-solution-challenge-2026.jpg" },
-  { title: "Yantra'26 — Cipher.cli", issuer: "ISTE · VIT", kind: "Hackathon", img: C + "iste-yantra-26-cipher-cli.jpg" },
-  { title: "Digital Dreamscapes", issuer: "International Seminar · VIT", kind: "Event", img: C + "vit-digital-dreamscapes.jpg" },
-  { title: "AI Job Bridge Program", issuer: "Unlox", kind: "AI", img: C + "unlox-ai-job-bridge.jpg" },
-  { title: "Spring Boot 4, Spring 7 & Hibernate", issuer: "Udemy", kind: "Development", img: C + "udemy-spring-boot-hibernate.jpg" },
-  { title: "The Complete SQL Bootcamp", issuer: "Udemy", kind: "Data", img: C + "udemy-sql-bootcamp.jpg" },
-  { title: "Java App Development: OOP & File I/O", issuer: "SkillUp · Coursera", kind: "Development", img: C + "skillup-java-app-development.jpg" },
-  { title: "C Programming for Beginners", issuer: "Udemy", kind: "Development", img: C + "udemy-c-programming.jpg" },
-  { title: "Introduction to Generative AI", issuer: "Google Cloud · Coursera", kind: "AI", img: C + "google-cloud-generative-ai.jpg" },
-  { title: "Discover the Art of Prompting", issuer: "Google · Coursera", kind: "AI", img: C + "google-art-of-prompting.jpg" },
-  { title: "Maximize Productivity with AI Tools", issuer: "Google · Coursera", kind: "AI", img: C + "google-productivity-ai-tools.jpg" },
-  { title: "Stay Ahead of the AI Curve", issuer: "Google · Coursera", kind: "AI", img: C + "google-stay-ahead-ai-curve.jpg" },
-  { title: "Use AI Responsibly", issuer: "Google · Coursera", kind: "AI", img: C + "google-use-ai-responsibly.jpg" },
-  { title: "Build & Beyond", issuer: "Whitehats Club · VIT", kind: "Event", img: C + "whitehats-build-and-beyond.jpg" },
+  { title: "Google AI Essentials", issuer: "Google · Coursera", kind: "AI", img: C + "google-ai-essentials.webp" },
+  { title: "ForgeAI — graVITas'26", issuer: "VIT × HCLTech", kind: "Hackathon", img: C + "forgeai-gravitas-26.webp" },
+  { title: "Solution Challenge 2026", issuer: "Build with AI · Hack2skill", kind: "Hackathon", img: C + "h2s-solution-challenge-2026.webp" },
+  { title: "Yantra'26 — Cipher.cli", issuer: "ISTE · VIT", kind: "Hackathon", img: C + "iste-yantra-26-cipher-cli.webp" },
+  { title: "Digital Dreamscapes", issuer: "International Seminar · VIT", kind: "Event", img: C + "vit-digital-dreamscapes.webp" },
+  { title: "AI Job Bridge Program", issuer: "Unlox", kind: "AI", img: C + "unlox-ai-job-bridge.webp" },
+  { title: "Spring Boot 4, Spring 7 & Hibernate", issuer: "Udemy", kind: "Development", img: C + "udemy-spring-boot-hibernate.webp" },
+  { title: "The Complete SQL Bootcamp", issuer: "Udemy", kind: "Data", img: C + "udemy-sql-bootcamp.webp" },
+  { title: "Java App Development: OOP & File I/O", issuer: "SkillUp · Coursera", kind: "Development", img: C + "skillup-java-app-development.webp" },
+  { title: "C Programming for Beginners", issuer: "Udemy", kind: "Development", img: C + "udemy-c-programming.webp" },
+  { title: "Introduction to Generative AI", issuer: "Google Cloud · Coursera", kind: "AI", img: C + "google-cloud-generative-ai.webp" },
+  { title: "Discover the Art of Prompting", issuer: "Google · Coursera", kind: "AI", img: C + "google-art-of-prompting.webp" },
+  { title: "Maximize Productivity with AI Tools", issuer: "Google · Coursera", kind: "AI", img: C + "google-productivity-ai-tools.webp" },
+  { title: "Stay Ahead of the AI Curve", issuer: "Google · Coursera", kind: "AI", img: C + "google-stay-ahead-ai-curve.webp" },
+  { title: "Use AI Responsibly", issuer: "Google · Coursera", kind: "AI", img: C + "google-use-ai-responsibly.webp" },
+  { title: "Build & Beyond", issuer: "Whitehats Club · VIT", kind: "Event", img: C + "whitehats-build-and-beyond.webp" },
 ]
 
 // Yashraj's own words (About page), lightly trimmed to fit the screen
