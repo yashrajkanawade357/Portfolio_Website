@@ -35,7 +35,7 @@ export function Timeline() {
           <div key={e.title + e.org}><span className="t">{e.title}</span><span className="o muted">{e.org}</span><span className="label muted">{e.when ?? ""}</span></div>
         ))}
       </div>
-      <p className="label muted" style={{ margin: "34px 0 14px" }}>Conferences</p>
+      <p className="label muted" style={{ margin: "34px 0 14px" }}>Conferences & recognition</p>
       <div className="lines">
         {conferences.map((e) => (
           <div key={e.title}>
