@@ -8,7 +8,7 @@ import { person } from "../data"
 import { useClock } from "./ui"
 
 /* ── settings the visitor can change ─────────────────────────────── */
-const SCENES = [["basic", "Basic"], ["glow", "Glow"], ["orbit", "Orbit"]] as const
+const SCENES = [["glow", "Glow"], ["orbit", "Orbit"]] as const
 type Scene = (typeof SCENES)[number][0]
 const FINISHES = {
   titanium: { frame: "#d9d6cf", edge: "#a6a29b", label: "Titanium" },
@@ -45,12 +45,12 @@ function useViewport() {
 function geometry(w: number, h: number) {
   const portrait = w < 760 || w / h < 0.9
   if (portrait) {
-    const W = Math.round(Math.min(430, w - 28))
-    const H = Math.round(Math.min(h - 118, W * 2.05))
+    const W = Math.round(Math.min(460, w - 20))
+    const H = Math.round(Math.min(h - 96, W * 2.1))
     return { portrait, W, H, b: 9, r: 34 }
   }
-  const W = Math.round(Math.min(1160, w * 0.86, (h - 150) / 0.66))
-  return { portrait, W, H: Math.round(W * 0.66), b: 12, r: 30 }
+  const W = Math.round(Math.min(1300, w * 0.92, (h - 120) / 0.64))
+  return { portrait, W, H: Math.round(W * 0.64), b: 12, r: 30 }
 }
 
 const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v))
@@ -63,7 +63,7 @@ export default function Shell({ children }: { children: ReactNode }) {
   const vp = useViewport()
   const g = geometry(vp.w, vp.h)
   const reduce = useReducedMotion()
-  const [scene, setScene] = useStored<Scene>("yk-scene", "basic", SCENES.map((s) => s[0]))
+  const [scene, setScene] = useStored<Scene>("yk-scene", "glow", SCENES.map((s) => s[0]))
   const [finish, setFinish] = useStored<Finish>("yk-finish", "titanium", Object.keys(FINISHES))
 
   const sw = g.W - 2 * g.b
@@ -201,6 +201,7 @@ export default function Shell({ children }: { children: ReactNode }) {
               </motion.div>
               {!g.portrait && <div className="crease" />}
               <StatusBar />
+              <div className="screen-fade" />
               <ScreenNav pathname={pathname} />
             </motion.div>
 

@@ -90,7 +90,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .screen { position: absolute; overflow: clip; background: var(--screen); transform: translateZ(2px); }
 .screen-content { position: absolute; left: 0; top: 0; width: 100%; container-type: inline-size; container-name: screen; }
 .crease { position: absolute; top: 0; bottom: 0; left: 50%; width: 22px; translate: -50% 0; pointer-events: none; z-index: 5;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.05) 40%, rgba(0,0,0,.18) 50%, rgba(255,255,255,.04) 60%, transparent); }
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.025) 42%, rgba(0,0,0,.07) 50%, rgba(255,255,255,.02) 58%, transparent); }
 .statusbar {
   position: absolute; inset: 0 0 auto 0; height: 30px; z-index: 6; display: flex; align-items: center; justify-content: space-between;
   padding: 0 16px; font: 500 11px var(--mono); color: #fff; mix-blend-mode: difference; pointer-events: none;
@@ -98,6 +98,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .statusbar .bat { display: inline-block; width: 20px; height: 10px; border: 1.5px solid currentColor; border-radius: 3px; margin-left: 8px; position: relative; vertical-align: -1px; }
 .statusbar .bat::after { content: ""; position: absolute; inset: 1.5px 5px 1.5px 1.5px; background: currentColor; border-radius: 1px; }
 
+.screen-fade { position: absolute; inset: auto 0 0 0; height: 84px; z-index: 6; pointer-events: none;
+  background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.18));
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  mask-image: linear-gradient(180deg, transparent, #000 70%); -webkit-mask-image: linear-gradient(180deg, transparent, #000 70%); }
 .screen-nav {
   position: absolute; left: 50%; bottom: 14px; translate: -50% 0; z-index: 7; display: flex; gap: 2px; padding: 4px;
   border-radius: 999px; background: rgba(20,20,20,.72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
@@ -158,11 +162,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .link-arrow { font-size: 14px; font-weight: 600; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
 
 /* intro */
-.intro { display: grid; grid-template-columns: 1.15fr 1fr; gap: max(20px, 4cqw); align-items: end; padding-top: max(64px, 7cqw); }
+.intro { display: grid; grid-template-columns: 1.15fr 1fr; gap: max(20px, 4cqw); align-items: center; padding-top: max(64px, 7cqw); }
 .hero-name { font-size: max(64px, 12.5cqw); margin: 14px 0 18px; }
 .intro .row { margin-top: 26px; }
 .intro-photo { border-radius: 18px; overflow: hidden; aspect-ratio: 4 / 5; }
-.intro-photo img { width: 100%; height: 100%; object-fit: cover; }
+.intro-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%; }
 
 /* numbers */
 .numbers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
@@ -230,9 +234,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .lightbox button.close { position: fixed; top: 16px; right: 16px; padding: 10px 14px; border-radius: 999px; background: #fff; color: var(--ink); font-weight: 600; font-size: 13px; }
 
 /* about */
-.about-hero { display: grid; grid-template-columns: 1fr 1.1fr; gap: max(20px, 4cqw); align-items: end; padding-top: max(64px, 7cqw); }
+.about-hero { display: grid; grid-template-columns: 1fr 1.1fr; gap: max(20px, 4cqw); align-items: center; padding-top: max(64px, 7cqw); }
 .about-hero figure { border-radius: 18px; overflow: hidden; aspect-ratio: 4 / 5; }
-.about-hero figure img { width: 100%; height: 100%; object-fit: cover; }
+.about-hero figure img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
 .about-hero h1 { font-size: max(58px, 10cqw); margin: 12px 0 18px; }
 .essay { display: grid; gap: 4px; }
 .essay > div { display: grid; grid-template-columns: 1fr 2fr; gap: 16px; padding: 18px 0; border-top: 1px solid var(--line); }
@@ -241,7 +245,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* contact */
 .contact-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: max(20px, 4cqw); align-items: start; }
 .contact h1 { font-size: max(58px, 10.5cqw); margin: 14px 0 22px; }
-.email { font-size: max(20px, 2.6cqw); font-weight: 600; word-break: break-all; }
+.email { font-size: max(19px, 2.6cqw); font-weight: 600; overflow-wrap: anywhere; }
 .form { display: grid; gap: 12px; margin-top: 8px; }
 .form label { display: grid; gap: 6px; }
 .form input, .form textarea { font: inherit; font-size: 15px; padding: 12px 14px; border-radius: 12px; border: 0; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink); }
@@ -249,7 +253,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .form .ok { padding: 14px; border-radius: 12px; background: #e7f6ec; color: #145c2c; font-weight: 500; }
 .form .err { color: #a3261a; font-size: 13px; }
 .contact-photo { border-radius: 18px; overflow: hidden; aspect-ratio: 3 / 4; }
-.contact-photo img { width: 100%; height: 100%; object-fit: cover; }
+.contact-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
 
 /* the screen is narrow (phone, or a small window): one column */
 @container screen (max-width: 640px) {

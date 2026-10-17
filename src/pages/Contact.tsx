@@ -38,7 +38,7 @@ export default function Contact() {
             <p className="label muted">Contact</p>
             <h1 className="display">Let's build something <span style={{ color: "#c79d00" }}>useful.</span></h1>
             <div className="row">
-              <a className="email" href={`mailto:${person.email}`}>{person.email}</a>
+              <a className="email" href={`mailto:${person.email}`}>{person.email.split("@")[0]}<wbr />@{person.email.split("@")[1]}</a>
               <button className="btn btn-ghost" onClick={copy} style={{ padding: "8px 14px" }}>{copied ? "Copied ✓" : "Copy"}</button>
             </div>
             <div className="row" style={{ marginTop: 18 }}>
@@ -65,7 +65,7 @@ export default function Contact() {
               </form>
             )}
           </div>
-          <figure className="contact-photo"><img src="/media/photos/contact-welcome.jpg" alt="Yashraj Kanawade with arms open, smiling" /></figure>
+          <figure className="contact-photo"><img src="/media/photos/contact-hero.jpg" alt="Yashraj Kanawade with arms open, smiling" /></figure>
         </div>
       </section>
       <Foot />

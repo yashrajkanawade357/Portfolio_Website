@@ -8,7 +8,7 @@ export default function About() {
   return (
     <>
       <section className="sec dark about-hero">
-        <figure><img src="/media/photos/about-arms-crossed.jpg" alt="Yashraj Kanawade standing with arms crossed by a wall of potted plants" /></figure>
+        <figure><img src="/media/photos/about-hero.jpg" alt="Yashraj Kanawade standing with arms crossed by a wall of potted plants" /></figure>
         <div>
           <p className="label muted">About</p>
           <h1 className="display">Stay curious,<br /><span className="accent">keep building.</span></h1>
