@@ -193,7 +193,7 @@ export const conferences = [
     detail: "Youth Navigating AI, Creativity & Virtual Expression. Awarded a certificate and swag by VIT and the Government of India." },
 ]
 
-export const communities = ["The AI & ML Club (TAM)", "Bulls & Bears", "AWS Student Builders", "E-Cell VIT", "SIAM"]
+export const communities = ["AWS Student Builder Group", "E-Cell VIT", "Bulls & Bears", "The AI & ML Club (TAM)", "SIAM"]
 
 const C = "/media/certificates/"
 export const certificates = [
@@ -221,6 +221,6 @@ export const about = [
   { h: "Software engineering", p: "I want to move beyond code that simply works and learn to build systems that are well-structured, reliable and scalable: backend development, APIs, databases and application architecture. Good engineering isn't about the most complicated technology; it's about thoughtful decisions and building something that genuinely serves its purpose." },
   { h: "AI & machine learning", p: "Building a model is much more than calling a training function. It starts with the problem and the data, and runs through cleaning, feature selection, training, evaluation and interpretation. I want to combine machine learning with well-designed software so the result is both intelligent and useful." },
   { h: "Where the two meet", p: "What I'm really after is the middle point between software engineering and AI: AI architecture, NLP and deep learning, designed and built into software that holds up in real use. A model is only as useful as the system around it, so I'm learning both sides together." },
-  { h: "Beyond the classroom", p: "Through TAM, SIAM, Bulls & Bears, E-Cell and the AWS Student Builder Group, I've worked with people from different backgrounds, on web tasks and on promotional design. Contributing to a team takes more than technical knowledge: it takes clear communication, owning responsibilities and adapting when plans change." },
+  { h: "Beyond the classroom", p: "Through the AWS Student Builder Group, E-Cell, Bulls & Bears, TAM and SIAM, I've worked with people from different backgrounds, on web tasks and on promotional design. Contributing to a team takes more than technical knowledge: it takes clear communication, owning responsibilities and adapting when plans change." },
   { h: "How I build", p: "A project starts with a question: what problem am I solving, who benefits, and what's the simplest useful version? Then I break it into steps and build. Debugging is part of the craft; errors usually reveal an assumption worth rethinking." },
 ]
