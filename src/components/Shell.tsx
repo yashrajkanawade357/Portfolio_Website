@@ -172,9 +172,10 @@ export default function Shell({ children }: { children: ReactNode }) {
             ) : (
               <>
                 {/* right half: always flat, the inner screen's right side */}
-                <div className="leaf" style={{ left: g.W / 2 - 2, width: g.W / 2 + 2, transform: "translateZ(-1px)" }}>
+                {/* once open, it tucks 2px under the left half so no hairline shows at the hinge */}
+                <div className="leaf" style={{ left: g.W / 2 - (open ? 2 : 0), width: g.W / 2 + (open ? 2 : 0), transform: "translateZ(-1px)" }}>
                   <div className="face" style={{ borderRadius: `0 ${g.r}px ${g.r}px 0` }}>
-                    <div className="glass off" style={{ inset: `${g.b}px ${g.b}px ${g.b}px 2px`, borderRadius: `0 ${g.r - g.b}px ${g.r - g.b}px 0` }} />
+                    <div className="glass off" style={{ inset: `${g.b}px ${g.b}px ${g.b}px ${open ? 2 : 0}px`, borderRadius: `0 ${g.r - g.b}px ${g.r - g.b}px 0` }} />
                     <span className="side-btn" style={{ right: -3, top: "22%", height: 46 }} />
                     <span className="side-btn" style={{ right: -3, top: "32%", height: 28 }} />
                   </div>

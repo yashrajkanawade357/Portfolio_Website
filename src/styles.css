@@ -188,6 +188,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .card:hover .card-media img { scale: 1.05; }
 .card-num { position: absolute; left: 10px; top: 10px; min-width: 42px; height: 42px; padding: 0 8px; border-radius: 10px; display: grid; place-items: center; font-family: var(--display); font-weight: 900; font-size: 26px; color: #fff; }
 .card-meta { display: flex; justify-content: space-between; margin-top: 12px; }
+.wip { display: inline-block; margin-left: 8px; padding: 2px 7px; border-radius: 999px; vertical-align: 1px;
+  background: color-mix(in srgb, var(--pulse) 30%, transparent); color: var(--ink); font-size: 10px; letter-spacing: 0.04em; }
 .card h3 { font-size: max(30px, 4.4cqw); margin-top: 6px; }
 .card p { margin-top: 6px; font-size: 14px; line-height: 1.45; color: #4b4842; max-width: 52ch; }
 

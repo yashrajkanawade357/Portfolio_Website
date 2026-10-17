@@ -9,7 +9,7 @@ export function ProjectCard({ p }: { p: Project }) {
         <img src={p.cover} alt={`${p.title} cover`} loading="lazy" />
         <span className="card-num" style={{ background: p.accent, color: p.accent === "#f5c518" ? "#111" : "#fff" }}>{p.number}</span>
       </div>
-      <div className="card-meta"><span className="label muted">{p.category}</span><span className="label muted">{p.year}</span></div>
+      <div className="card-meta"><span className="label muted">{p.category}{p.status && <span className="wip">{p.status}</span>}</span><span className="label muted">{p.year}</span></div>
       <h3 className="display">{p.title}</h3>
       <p>{p.summary}</p>
     </Link>

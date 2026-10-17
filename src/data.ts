@@ -27,6 +27,7 @@ export type Project = {
   body: string[]
   stack: string[]
   live?: string
+  status?: "In progress"
   accent: string
   cover: string
   still: string
@@ -59,13 +60,13 @@ export const projects: Project[] = [
   },
   {
     slug: "project-sindhu", number: "03", title: "Project Sindhu", category: "Civic tech", client: "Smart India Hackathon 2026", year: "2026",
-    role: "Full-stack · GIS", accent: "#16803d", live: "https://sindhu-qp4o.onrender.com/",
+    role: "Full-stack · GIS", status: "In progress", accent: "#16803d", live: "https://sindhu-qp4o.onrender.com/",
     cover: P + "03-sindhu.webp", still: P + "03-sindhu-still.webp",
     summary: "Satellite-verified watershed intelligence: evidence of whether a water structure actually worked.",
     body: [
       "Built for Smart India Hackathon 2026 (PS SIH26015). Sindhu combines AI, GIS, satellite imagery and field data to monitor watershed interventions, detect change and deliver evidence you can trust, structure by structure.",
       "A map can show where a check dam was built. Sindhu explains whether it worked: field officers capture verified photos in an offline-first app, Sentinel-2 imagery supplies the history, and an evidence-fusion engine turns both into a watershed health score.",
-      "Live pilot in Jamgaon, Beed: 15 structures monitored, 91 months of satellite record and 1,246 valid observations.",
+      "Still in progress. The pilot is set in Jamgaon, Beed, and the current build tracks 15 structures across 91 months of satellite record (1,246 valid observations).",
     ],
     stack: ["JavaScript", "GIS", "Sentinel-2", "Offline-first PWA"],
   },
@@ -104,15 +105,27 @@ export const projects: Project[] = [
   },
   {
     slug: "ledgersentinel", number: "07", title: "LedgerSentinel", category: "AI / ML", client: "24-hour hackathon · team of three", year: "2026",
-    role: "Backend · Supabase · UX", accent: "#2563eb", live: "https://ledgersentinel-hq.web.app/",
+    role: "Backend · Supabase · UX", status: "In progress", accent: "#2563eb", live: "https://ledgersentinel-hq.web.app/",
     cover: P + "07-ledgersentinel.webp", still: P + "07-ledgersentinel-still.webp",
     summary: "Fraud detection with bounded autonomy: the model raises signals, a policy gate makes the call.",
     body: [
       "LedgerSentinel catches social-engineering fraud by reading a transaction together with the conversation around it, because the transaction is not always the whole story.",
       "Its rule is bounded autonomy. The models only emit signals; a deterministic policy gate chooses the action (approve, verify, cool off, hold or escalate), so a person stays in the loop when it matters. Calibrated confidence reached 92.2% on held-out cases.",
-      "I built the backend and data layer (Python, FastAPI, Supabase Postgres with pgvector) and shaped the analyst experience.",
+      "I built the backend and data layer (Python, FastAPI, Supabase Postgres with pgvector) and shaped the analyst experience. Still in progress: the hackathon build is live and we are taking it further.",
     ],
     stack: ["Python", "FastAPI", "Supabase", "pgvector", "React"],
+  },
+  {
+    slug: "portfolio", number: "08", title: "This Portfolio", category: "Web app", client: "Personal project", year: "2026",
+    role: "Design · Frontend · Motion", accent: "#e48a6f", live: "https://yashrajkanawadeportfolio.netlify.app/",
+    cover: P + "08-portfolio.webp", still: P + "08-portfolio-still.webp",
+    summary: "The site you're on: a folding phone that opens as you scroll, built from scratch in React and Motion.",
+    body: [
+      "I wanted a portfolio that felt like an object, not a template. The site is a foldable phone: its cover is a lock screen, and scrolling swings the left half open on its hinge until the inner screen wakes up. From there, the page scroll moves the content inside the phone's screen.",
+      "Everything is my own code: React 19 and TypeScript on Vite, Motion for the fold, springs and shared-layout transitions, and React Router for the pages. Visitors can switch the background scene and the phone's finish. On phones the device fills the screen instead of folding.",
+      "It respects reduced-motion settings, works with a keyboard, serves WebP images and deploys from GitHub to Netlify on every push.",
+    ],
+    stack: ["React", "TypeScript", "Motion", "Vite", "Netlify"],
   },
 ]
 
@@ -121,7 +134,7 @@ export const categories: Category[] = ["AI / ML", "Web app", "Civic tech", "Web3
 export const numbers = [
   { value: 30, suffix: "+", label: "Repositories on GitHub" },
   { value: 16, suffix: "", label: "Certificates earned" },
-  { value: 7, suffix: "", label: "Projects shipped" },
+  { value: projects.filter((p) => !p.status).length, suffix: "", label: "Projects shipped" },
   { value: 5, suffix: "", label: "Clubs and chapters" },
 ]
 

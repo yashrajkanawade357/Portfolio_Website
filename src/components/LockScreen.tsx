@@ -24,8 +24,8 @@ export default function LockScreen({ onUnfold, style }: { onUnfold: () => void; 
           </Link>
           <Link className="note" to={`/projects/${sindhu.slug}`}>
             <img src={sindhu.cover} alt="" />
-            <span><b>Project Sindhu — live pilot</b><small>SIH 2026 · Jamgaon, Beed</small></span>
-            <time>live</time>
+            <span><b>Project Sindhu — in progress</b><small>SIH 2026 · Jamgaon, Beed</small></span>
+            <time>wip</time>
           </Link>
         </div>
 

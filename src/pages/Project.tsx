@@ -14,18 +14,18 @@ export default function Project() {
   return (
     <>
       <section className="sec light" style={{ paddingTop: "max(64px, 7cqw)" }}>
-        <p className="label muted">{p.number} · {p.category}</p>
+        <p className="label muted">{p.number} · {p.category}{p.status && <span className="wip">{p.status}</span>}</p>
         <h1 className="display p-title">{p.title}</h1>
         <dl className="p-meta">
           <div><dt className="label muted">Client</dt><dd>{p.client}</dd></div>
-          <div><dt className="label muted">Year</dt><dd>{p.year}</dd></div>
+          <div><dt className="label muted">Year</dt><dd>{p.year}{p.status ? ` · ${p.status.toLowerCase()}` : ""}</dd></div>
           <div><dt className="label muted">Role</dt><dd>{p.role}</dd></div>
           <div><dt className="label muted">Built with</dt><dd>{p.stack.join(", ")}</dd></div>
         </dl>
         <p className="p-summary">{p.summary}</p>
         <Reveal className="p-img"><img src={p.cover} alt={`${p.title}`} /></Reveal>
         <div className="p-body">{p.body.map((t) => <p key={t.slice(0, 24)}>{t}</p>)}</div>
-        {p.live && <a className="btn btn-ink" href={p.live} target="_blank" rel="noreferrer" style={{ marginBottom: 28 }}>Visit the live site ↗</a>}
+        {p.live && <a className="btn btn-ink" href={p.live} target="_blank" rel="noreferrer" style={{ marginBottom: 28 }}>{p.status ? "See the current build ↗" : "Visit the live site ↗"}</a>}
         <Reveal className="p-img"><img src={p.still} alt={`${p.title}, another view`} loading="lazy" /></Reveal>
       </section>
       <section className="sec light">
