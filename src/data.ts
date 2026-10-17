@@ -56,7 +56,7 @@ export const projects: Project[] = [
       "Terra-Flow is a smart-city analytics platform for the Bangalore metro region. One live overview brings the city's signals together: a congestion index, average property prices, a livability score, an investment grade and the daily economic cost of traffic.",
       "An urban-intelligence map compares neighbourhoods by traffic density, property price, livability and investment score, and trend analytics show how each area moves over time.",
       "It began as my first-year Multidisciplinary Project (MDP), Terraflow Analytics: Urban Intelligence Analysis, allotted under VIT's School of Civil Engineering. Coming from CSE, I handled the entire technical implementation, applying software to a civil-engineering problem.",
-      "In April 2026 it was selected as one of three projects to represent the School of Civil Engineering at VIT's Multidisciplinary Project Display, where I presented it to HODs, professors and research scholars. Guided by Dr. P. Porchelvan.",
+      "In April 2026 it was selected as one of three projects to represent the School of Civil Engineering at VIT's Multidisciplinary Project Display, where I presented it to the Director, HODs, professors and research scholars. Guided by Dr. P. Porchelvan.",
     ],
     stack: ["TypeScript", "Web app", "Data visualisation"],
   },
@@ -192,7 +192,7 @@ export const hackathons: { title: string; org: string; when?: string }[] = [
 
 export const conferences = [
   { title: "Multidisciplinary Project Display — Terra-Flow", org: "School of Civil Engineering · VIT", when: "Apr 2026",
-    detail: "One of three projects chosen to represent the School of Civil Engineering. Presented to HODs, professors and research scholars." },
+    detail: "One of three projects chosen to represent the School of Civil Engineering. Presented to the Director, HODs, professors and research scholars." },
   { title: "International Seminar — Digital Dreamscapes", org: "VIT × Ministry of Youth Affairs & Sports, Govt. of India", when: "Mar 2026",
     detail: "Youth Navigating AI, Creativity & Virtual Expression. Awarded a certificate and swag by VIT and the Government of India." },
 ]
