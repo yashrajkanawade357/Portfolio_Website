@@ -44,13 +44,15 @@ function useViewport() {
 
 function geometry(w: number, h: number) {
   const portrait = w < 760 || w / h < 0.9
+  // real phones: the device fills the whole screen, with just a thin frame
+  if (w < 600) return { portrait, phone: true, W: w - 8, H: h - 8, b: 5, r: 36 }
   if (portrait) {
-    const W = Math.round(Math.min(460, w - 20))
+    const W = Math.round(Math.min(600, w - 60))
     const H = Math.round(Math.min(h - 96, W * 2.1))
-    return { portrait, W, H, b: 9, r: 34 }
+    return { portrait, phone: false, W, H, b: 9, r: 34 }
   }
   const W = Math.round(Math.min(1300, w * 0.92, (h - 120) / 0.64))
-  return { portrait, W, H: Math.round(W * 0.64), b: 12, r: 30 }
+  return { portrait, phone: false, W, H: Math.round(W * 0.64), b: 12, r: 30 }
 }
 
 const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v))
@@ -132,7 +134,9 @@ export default function Shell({ children }: { children: ReactNode }) {
     <div className={`app scene-${scene}`} style={{ "--frame": FINISHES[finish].frame, "--edge": FINISHES[finish].edge } as CSSProperties}>
       <SceneLayer scene={scene} />
 
-      <header className="topbar">
+      {g.phone && <LaptopHint />}
+
+      {!g.phone && <header className="topbar">
         <Link to="/" className="logo">{person.name}</Link>
         <div className="switch" role="group" aria-label="Background">
           {SCENES.map(([id, label]) => (
@@ -142,7 +146,7 @@ export default function Shell({ children }: { children: ReactNode }) {
             </button>
           ))}
         </div>
-      </header>
+      </header>}
 
       <div className="track" style={{ height: vp.h + unfold + dist }}>
         <div className="stage">
@@ -199,7 +203,7 @@ export default function Shell({ children }: { children: ReactNode }) {
                   </motion.div>
                 </AnimatePresence>
               </motion.div>
-              <StatusBar />
+              {!g.phone && <StatusBar />}
               <div className="screen-fade" />
               <ScreenNav pathname={pathname} />
             </motion.div>
@@ -224,6 +228,31 @@ export default function Shell({ children }: { children: ReactNode }) {
         </div>
       )}
     </div>
+  )
+}
+
+/* phones get the full-screen layout; mention once that the fold lives on bigger screens */
+function LaptopHint() {
+  const [show, setShow] = useState(() => { try { return !localStorage.getItem("yk-hint") } catch { return false } })
+  const close = () => { setShow(false); try { localStorage.setItem("yk-hint", "1") } catch { /* private mode */ } }
+  useEffect(() => {
+    if (!show) return
+    const t = setTimeout(close, 7000)
+    return () => clearTimeout(t)
+  }, [show])
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          className="hint" role="status"
+          initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }}
+          transition={{ type: "spring", bounce: 0.2, visualDuration: 0.4, delay: 0.8 }}
+        >
+          <span>Open on a laptop to watch the phone unfold.</span>
+          <button onClick={close} aria-label="Dismiss">✕</button>
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 }
 

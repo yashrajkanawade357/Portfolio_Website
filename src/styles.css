@@ -47,6 +47,15 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .switch button span { position: relative; z-index: 1; }
 .switch button[aria-pressed="true"] span { color: var(--page-bg); }
 
+.hint {
+  position: fixed; top: 14px; left: 14px; right: 14px; z-index: 40; display: flex; align-items: center; gap: 10px;
+  padding: 10px 10px 10px 16px; border-radius: 16px; font-size: 13px; font-weight: 500; color: #fff;
+  background: rgba(20,20,20,.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 12px 30px -12px rgba(0,0,0,.5);
+}
+.hint span { flex: 1; }
+.hint button { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,.12); color: #fff; font-size: 12px; }
+
 .finishes {
   position: fixed; left: 50%; bottom: 18px; z-index: 30; transform: translateX(-50%);
   display: flex; gap: 8px; padding: 6px; border-radius: 999px;
