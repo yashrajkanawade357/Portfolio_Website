@@ -174,12 +174,16 @@ export const experience = [
     detail: "Outreach and promotional design for the club." },
 ]
 
-export const hackathons = [
-  { title: "Project Sindhu", org: "Smart India Hackathon 2026", when: "2026" },
+// in the order he lists them; year only where we know it
+export const hackathons: { title: string; org: string; when?: string }[] = [
+  { title: "Google Solution Challenge", org: "Build with AI · Google × Hack2skill", when: "2026" },
+  { title: "Vibe to Code", org: "Coding Ninjas × Google Developer Groups" },
+  { title: "Code2Create", org: "ACM · VIT" },
+  { title: "Odoo Hackathon", org: "Odoo" },
+  { title: "TCS Challenge", org: "TCS" },
+  { title: "Adobe Hackathon", org: "Adobe" },
   { title: "ForgeAI", org: "graVITas'26 · VIT × HCLTech", when: "2026" },
-  { title: "Cipher.cli", org: "Yantra'26 · ISTE VIT", when: "2026" },
-  { title: "Build with AI", org: "Solution Challenge 2026", when: "2026" },
-  { title: "Build & Beyond", org: "Whitehats Club · VIT", when: "2026" },
+  { title: "Smart India Hackathon", org: "Project Sindhu · PS SIH26015", when: "2026" },
 ]
 
 export const communities = ["The AI & ML Club (TAM)", "Bulls & Bears", "AWS Student Builders", "E-Cell VIT", "SIAM"]
