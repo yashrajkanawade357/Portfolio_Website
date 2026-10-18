@@ -10,19 +10,23 @@ export default function Contact() {
   const [state, setState] = useState<State>("idle")
   const [copied, setCopied] = useState(false)
 
-  // Netlify Forms: post url-encoded fields to "/" with the form's name
+  // FormSubmit relays the message to my inbox (no backend needed)
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setState("sending")
     const data = new FormData(e.currentTarget)
-    data.set("form-name", "contact")
+    if (data.get("_honey")) return
+    setState("sending")
     try {
-      const res = await fetch("/", {
+      const res = await fetch(`https://formsubmit.co/ajax/${person.email}`, {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: data.get("name"), email: data.get("email"), message: data.get("message"),
+          _subject: `Portfolio message from ${data.get("name")}`, _template: "table", _captcha: "false",
+        }),
       })
-      setState(res.ok ? "sent" : "error")
+      const out = await res.json().catch(() => ({}))
+      setState(res.ok && String(out.success) === "true" ? "sent" : "error")
     } catch { setState("error") }
   }
 
@@ -52,9 +56,8 @@ export default function Contact() {
             {state === "sent" ? (
               <p className="form"><span className="ok">Thanks, your message is on its way. I'll get back to you soon.</span></p>
             ) : (
-              <form className="form" name="contact" method="POST" onSubmit={submit}>
-                <input type="hidden" name="form-name" value="contact" />
-                <p hidden><label>Leave this empty <input name="bot-field" /></label></p>
+              <form className="form" onSubmit={submit}>
+                <p hidden><label>Leave this empty <input name="_honey" tabIndex={-1} autoComplete="off" /></label></p>
                 <label><span className="label muted">Your name</span><input name="name" required autoComplete="name" /></label>
                 <label><span className="label muted">Email</span><input name="email" type="email" required autoComplete="email" /></label>
                 <label><span className="label muted">Your message</span><textarea name="message" required /></label>

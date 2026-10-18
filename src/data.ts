@@ -121,15 +121,15 @@ export const projects: Project[] = [
   },
   {
     slug: "portfolio", number: "08", title: "This Portfolio", category: "Web app", client: "Personal project", year: "2026",
-    role: "Design · Frontend · Motion", accent: "#e48a6f", live: "https://yashrajkanawadeportfolio.netlify.app/",
+    role: "Design · Frontend · Motion", accent: "#e48a6f", live: "https://yashrajkanawade.vercel.app/",
     cover: P + "08-portfolio.webp", still: P + "08-portfolio-still.webp",
     summary: "The site you're on: a folding phone that opens as you scroll, built from scratch in React and Motion.",
     body: [
       "I wanted a portfolio that felt like an object, not a template. The site is a foldable phone: its cover is a lock screen, and scrolling swings the left half open on its hinge until the inner screen wakes up. From there, the page scroll moves the content inside the phone's screen.",
       "Everything is my own code: React 19 and TypeScript on Vite, Motion for the fold, springs and shared-layout transitions, and React Router for the pages. Visitors can switch the background scene and the phone's finish. On phones the device fills the screen instead of folding.",
-      "It respects reduced-motion settings, works with a keyboard, serves WebP images and deploys from GitHub to Netlify on every push.",
+      "It respects reduced-motion settings, works with a keyboard, serves WebP images and deploys from GitHub to Vercel on every push.",
     ],
-    stack: ["React", "TypeScript", "Motion", "Vite", "Netlify"],
+    stack: ["React", "TypeScript", "Motion", "Vite", "Vercel"],
   },
 ]
 
