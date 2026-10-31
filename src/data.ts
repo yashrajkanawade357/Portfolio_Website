@@ -75,40 +75,7 @@ export const projects: Project[] = [
     stack: ["JavaScript", "GIS", "Sentinel-2", "Offline-first PWA"],
   },
   {
-    slug: "ai-gym-unlox", number: "04", title: "AI Gym — Unlox", category: "AI / ML", client: "Unlox · 5-month AI/ML training", year: "2026",
-    role: "AI · Full-stack", accent: "#ff5a1f",
-    cover: P + "04-ai-gym-unlox.webp", still: P + "04-ai-gym-unlox-still.webp",
-    summary: "An AI gym companion: workout modules and a coach that adapts to your routine.",
-    body: [
-      "An AI gym and fitness companion, built during my five-month AI/ML training with the Unlox team (AI Job Bridge Program).",
-      "Workout modules cover planning and tracking, and an AI Gym Buddy guides each session and adapts to the user's routine. Built in Python with generative AI at its core.",
-    ],
-    stack: ["Python", "Generative AI", "Full-stack"],
-  },
-  {
-    slug: "cipher-cli", number: "05", title: "Cipher.cli", category: "Web3", client: "Yantra'26 · ISTE VIT", year: "2026",
-    role: "Developer", accent: "#f5c518",
-    cover: P + "05-cipher-cli.webp", still: P + "05-cipher-cli-still.webp",
-    summary: "A command-line tool for transparent, decentralized systems: verifiability you can run from a terminal.",
-    body: [
-      "Cipher.cli brings Web3 transparency to the command line, for building and checking decentralized systems where every record can be verified instead of trusted.",
-      "Presented at Yantra'26, organised by ISTE at VIT, in February 2026. Built with JavaScript.",
-    ],
-    stack: ["JavaScript", "Web3", "CLI"],
-  },
-  {
-    slug: "ai-ml-lab", number: "06", title: "AI / ML Lab", category: "AI / ML", client: "Self-directed", year: "2026",
-    role: "Research · Engineering", accent: "#2fcb68",
-    cover: P + "06-ai-ml-lab.webp", still: P + "06-ai-ml-lab-still.webp",
-    summary: "A hands-on run through the modern AI stack, from regression to RAG and LoRA fine-tuning.",
-    body: [
-      "A collection of working projects that take the AI stack apart piece by piece: retrieval-augmented generation, LoRA, QLoRA and PEFT fine-tuning, Transformer and GPT internals, LangChain and LangGraph agents, Hugging Face pipelines and a chatbot.",
-      "The foundations are here too: regression, decision trees, random forests and boosting, with exploratory data analysis in NumPy and Pandas.",
-    ],
-    stack: ["Python", "RAG", "LoRA / PEFT", "Transformers", "LangChain"],
-  },
-  {
-    slug: "vault-zero", number: "07", title: "Vault-Zero", category: "Web app", client: "AWS Student Builder Group · Team 2", year: "2026",
+    slug: "vault-zero", number: "04", title: "Vault-Zero", category: "Web app", client: "AWS Student Builder Group · Team 2", year: "2026",
     role: "Frontend · Integration · Deployment", status: "In progress", accent: "#e8743b",
     cover: P + "07-vault-zero.webp", still: P + "07-vault-zero-still.webp",
     summary: "Share it, then burn it: files sent through a password-locked link that self-destructs when its time or downloads run out.",
@@ -121,7 +88,7 @@ export const projects: Project[] = [
     stack: ["React", "TypeScript", "Tailwind CSS", "Express", "Prisma", "Supabase"],
   },
   {
-    slug: "portfolio", number: "08", title: "This Portfolio", category: "Web app", client: "Personal project", year: "2026",
+    slug: "portfolio", number: "05", title: "This Portfolio", category: "Web app", client: "Personal project", year: "2026",
     role: "Design · Frontend · Motion", accent: "#e48a6f", live: "https://yashrajkanawade.vercel.app/",
     cover: P + "08-portfolio.webp", still: P + "08-portfolio-still.webp",
     summary: "The site you're on: a folding phone that opens as you scroll, built from scratch in React and Motion.",
@@ -131,6 +98,39 @@ export const projects: Project[] = [
       "It respects reduced-motion settings, works with a keyboard, serves WebP images and deploys from GitHub to Vercel on every push.",
     ],
     stack: ["React", "TypeScript", "Motion", "Vite", "Vercel"],
+  },
+  {
+    slug: "ai-gym-unlox", number: "06", title: "AI Gym — Unlox", category: "AI / ML", client: "Unlox · 5-month AI/ML training", year: "2026",
+    role: "AI · Full-stack", accent: "#ff5a1f",
+    cover: P + "04-ai-gym-unlox.webp", still: P + "04-ai-gym-unlox-still.webp",
+    summary: "An AI gym companion: workout modules and a coach that adapts to your routine.",
+    body: [
+      "An AI gym and fitness companion, built during my five-month AI/ML training with the Unlox team (AI Job Bridge Program).",
+      "Workout modules cover planning and tracking, and an AI Gym Buddy guides each session and adapts to the user's routine. Built in Python with generative AI at its core.",
+    ],
+    stack: ["Python", "Generative AI", "Full-stack"],
+  },
+  {
+    slug: "cipher-cli", number: "07", title: "Cipher.cli", category: "Web3", client: "Yantra'26 · ISTE VIT", year: "2026",
+    role: "Developer", accent: "#f5c518",
+    cover: P + "05-cipher-cli.webp", still: P + "05-cipher-cli-still.webp",
+    summary: "A command-line tool for transparent, decentralized systems: verifiability you can run from a terminal.",
+    body: [
+      "Cipher.cli brings Web3 transparency to the command line, for building and checking decentralized systems where every record can be verified instead of trusted.",
+      "Presented at Yantra'26, organised by ISTE at VIT, in February 2026. Built with JavaScript.",
+    ],
+    stack: ["JavaScript", "Web3", "CLI"],
+  },
+  {
+    slug: "ai-ml-lab", number: "08", title: "AI / ML Lab", category: "AI / ML", client: "Self-directed", year: "2026",
+    role: "Research · Engineering", accent: "#2fcb68",
+    cover: P + "06-ai-ml-lab.webp", still: P + "06-ai-ml-lab-still.webp",
+    summary: "A hands-on run through the modern AI stack, from regression to RAG and LoRA fine-tuning.",
+    body: [
+      "A collection of working projects that take the AI stack apart piece by piece: retrieval-augmented generation, LoRA, QLoRA and PEFT fine-tuning, Transformer and GPT internals, LangChain and LangGraph agents, Hugging Face pipelines and a chatbot.",
+      "The foundations are here too: regression, decision trees, random forests and boosting, with exploratory data analysis in NumPy and Pandas.",
+    ],
+    stack: ["Python", "RAG", "LoRA / PEFT", "Transformers", "LangChain"],
   },
 ]
 
