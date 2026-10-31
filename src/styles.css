@@ -275,8 +275,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* moments: an event photo with its story */
 .moment { display: grid; grid-template-columns: minmax(0, 0.8fr) 1.2fr; gap: max(20px, 4cqw); align-items: center; }
-.moment figure { border-radius: 18px; overflow: hidden; aspect-ratio: 3 / 4; max-height: 560px; }
+.moment figure { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 3 / 4; max-height: 560px; }
 .moment figure img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+.moment figcaption { position: absolute; left: 12px; right: 12px; bottom: 12px; padding: 8px 12px; border-radius: 10px; font: 500 11px var(--mono); letter-spacing: 0.03em; color: #fff;
+  background: rgba(10,10,10,.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 .moment h2 { font-size: max(44px, 7cqw); margin: 10px 0 16px; }
 
 /* contact */

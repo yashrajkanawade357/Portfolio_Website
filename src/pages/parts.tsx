@@ -117,7 +117,7 @@ export function Moment() {
   const e = events[0]
   return (
     <div className="moment">
-      <figure><img src={e.photo} alt={e.alt} decoding="async" /></figure>
+      <figure><img src={e.photo} alt={e.alt} decoding="async" /><figcaption>{e.caption}</figcaption></figure>
       <div>
         <p className="label muted">Moments · {e.when}</p>
         <h2 className="display">Organising <span className="accent">CASA.</span></h2>
