@@ -3,12 +3,14 @@ import { Link } from "react-router-dom"
 import { AnimatePresence, motion } from "motion/react"
 import { categories, projects, type Category } from "../data"
 import { useTitle } from "../components/ui"
-import { ProjectCard } from "./parts"
+import { AppGrid, ProjectCard } from "./parts"
 import { Cta, Foot } from "./Home"
 
 export default function Work() {
   useTitle("Work")
   const [filter, setFilter] = useState<Category | "All">("All")
+  const [view, setViewState] = useState<"cards" | "apps">(() => { try { return localStorage.getItem("yk-view") === "apps" ? "apps" : "cards" } catch { return "cards" } })
+  const setView = (v: "cards" | "apps") => { setViewState(v); try { localStorage.setItem("yk-view", v) } catch { /* private mode */ } }
   const shown = projects.filter((p) => filter === "All" || p.category === filter)
   return (
     <>
@@ -17,6 +19,7 @@ export default function Work() {
         <p className="label muted">Selected projects · 2025—26</p>
         <p className="lead" style={{ marginTop: 14 }}>AI products, full-stack platforms and hackathon builds. Open a project for the full story.</p>
 
+        <div className="work-bar">
         <div className="filters" role="group" aria-label="Filter projects">
           {(["All", ...categories] as const).map((c) => (
             <button key={c} aria-pressed={filter === c} onClick={() => setFilter(c)}>
@@ -25,7 +28,17 @@ export default function Work() {
             </button>
           ))}
         </div>
+        <div className="filters view" role="group" aria-label="View">
+          {(["cards", "apps"] as const).map((v) => (
+            <button key={v} aria-pressed={view === v} onClick={() => setView(v)}>
+              {view === v && <motion.span layoutId="view-pill" className="pill" transition={{ type: "spring", bounce: 0.2, visualDuration: 0.35 }} />}
+              <span>{v === "cards" ? "▤ Cards" : "▦ Apps"}</span>
+            </button>
+          ))}
+        </div>
+        </div>
 
+        {view === "apps" ? <AppGrid items={shown} /> : (
         <motion.div className="cards" layout>
           <AnimatePresence mode="popLayout">
             {shown.map((p) => (
@@ -36,6 +49,7 @@ export default function Work() {
             ))}
           </AnimatePresence>
         </motion.div>
+        )}
       </section>
 
       <section className="sec light">

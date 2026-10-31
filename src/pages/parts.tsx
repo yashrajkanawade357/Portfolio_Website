@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { conferences, events, experience, focus, hackathons, skills, type Project } from "../data"
+import { conferences, events, experience, focus, hackathons, projects, skills, type Project } from "../data"
 import { Reveal } from "../components/ui"
 import { useLaunch } from "../components/launch"
 
@@ -126,4 +126,35 @@ export function Moment() {
       </div>
     </div>
   )
+}
+
+/* projects as phone apps: a coloured icon with a monogram, opening like an app */
+const MONO: Record<string, string> = {
+  vyora: "Vy", "terra-flow": "Tf", "project-sindhu": "Si", "vault-zero": "Vz",
+  portfolio: "YK", "ai-gym-unlox": "Gy", "cipher-cli": ">_", "ai-ml-lab": "Ai",
+}
+
+export function AppIcon({ p }: { p: Project }) {
+  const launch = useLaunch()
+  const to = `/projects/${p.slug}`
+  return (
+    <Link
+      className="app-tile" to={to}
+      onClick={(e) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return
+        const icon = e.currentTarget.querySelector<HTMLElement>(".app-icon")
+        if (icon && launch(p.cover, icon, to, p.accent)) e.preventDefault()
+      }}
+    >
+      <span className="app-icon" style={{ "--tint": p.accent } as React.CSSProperties}>
+        <b>{MONO[p.slug] ?? p.title.slice(0, 2)}</b>
+        {p.status && <i className="app-dot" title={p.status} />}
+      </span>
+      <span className="app-name">{p.title}</span>
+    </Link>
+  )
+}
+
+export function AppGrid({ items = projects }: { items?: Project[] }) {
+  return <div className="apps">{items.map((p) => <AppIcon key={p.slug} p={p} />)}</div>
 }

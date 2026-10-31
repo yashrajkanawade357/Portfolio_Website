@@ -6,6 +6,8 @@ import {
 } from "motion/react"
 import LockScreen from "./LockScreen"
 import { LaunchContext, type Launch } from "./launch"
+import { play, setSound, useSound } from "./sound"
+import { SignalContext } from "./secret"
 import { person } from "../data"
 import { useClock } from "./ui"
 
@@ -22,7 +24,7 @@ const PAGE = {
 }
 
 /* a short tap on phones that support it (Android); ignored elsewhere */
-export const tick = () => { try { if (matchMedia("(pointer: coarse)").matches) navigator.vibrate?.(8) } catch { /* unsupported */ } }
+export const tick = () => { play("tap"); try { if (matchMedia("(pointer: coarse)").matches) navigator.vibrate?.(8) } catch { /* unsupported */ } }
 
 /* ── settings the visitor can change ─────────────────────────────── */
 const SCENES = [["glow", "Glow"], ["orbit", "Orbit"]] as const
@@ -142,6 +144,7 @@ export default function Shell({ children }: { children: ReactNode }) {
     if (v < 0.9) locked.current = false
     else if (v >= 0.999 && !locked.current) {
       locked.current = true
+      play("click")
       animate(settle, [1, 1.012, 1], { duration: 0.42, ease: "easeOut" })
       sweep.set(-120)
       animate(sweep, 120, { duration: 0.9, ease: [0.3, 0, 0.2, 1] })
@@ -182,6 +185,7 @@ export default function Shell({ children }: { children: ReactNode }) {
     const k = scr.offsetWidth / s.width
     setLaunching({ src, to, tint, x: (r.left - s.left) * k, y: (r.top - s.top) * k, w: r.width * k, h: r.height * k })
     tick()
+    play("whoosh")
     // the page swaps in underneath while the image is still settling
     setTimeout(() => navigate(to), 380)
     return true
@@ -191,6 +195,23 @@ export default function Shell({ children }: { children: ReactNode }) {
     const t = setTimeout(() => setLaunching(null), 420)
     return () => clearTimeout(t)
   }, [pathname, launching])
+
+  // the 404 page drops the signal bars
+  const [signal, setSignal] = useState(true)
+
+  // the secret: open every project and a notification says thanks
+  const [award, setAward] = useState(false)
+  useEffect(() => {
+    const on = () => { setAward(true); play("ping") }
+    window.addEventListener("yk-award", on)
+    return () => window.removeEventListener("yk-award", on)
+  }, [])
+  useEffect(() => {
+    if (!award) return
+    const t = setTimeout(() => setAward(false), 9000)
+    return () => clearTimeout(t)
+  }, [award])
+  const soundOn = useSound()
 
   const unfoldNow = () => window.scrollTo({ top: unfold, behavior: reduce ? "auto" : "smooth" })
 
@@ -215,6 +236,14 @@ export default function Shell({ children }: { children: ReactNode }) {
 
       {!g.phone && <header className="topbar">
         <Link to="/" className="logo">{person.name}</Link>
+        <div className="top-tools">
+        <button className="sound" aria-pressed={soundOn} onClick={() => setSound(!soundOn)} aria-label={soundOn ? "Turn sound off" : "Turn sound on"}>
+          <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" />
+            {soundOn ? <path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              : <path d="M16.5 9.5l5 5m0-5l-5 5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />}
+          </svg>
+          <span>{soundOn ? "Sound on" : "Sound off"}</span>
+        </button>
         <div className="switch" role="group" aria-label="Background">
           {SCENES.map(([id, label]) => (
             <button key={id} aria-pressed={scene === id} onClick={() => setScene(id)}>
@@ -222,6 +251,7 @@ export default function Shell({ children }: { children: ReactNode }) {
               <span>{label}</span>
             </button>
           ))}
+        </div>
         </div>
       </header>}
 
@@ -277,6 +307,7 @@ export default function Shell({ children }: { children: ReactNode }) {
               style={{ left: g.b, top: g.b, width: sw, height: sh, borderRadius: g.r - g.b, opacity: g.portrait ? 1 : wake, pointerEvents: open || g.portrait ? "auto" : "none" }}
             >
               <motion.div ref={contentRef} className="screen-content" style={{ y: contentY }} onFocus={onFocus}>
+                <SignalContext.Provider value={setSignal}>
                 <LaunchContext.Provider value={launch}>
                   <AnimatePresence mode="wait" initial={false} custom={dir}>
                     <motion.div
@@ -287,12 +318,28 @@ export default function Shell({ children }: { children: ReactNode }) {
                     </motion.div>
                   </AnimatePresence>
                 </LaunchContext.Provider>
+                </SignalContext.Provider>
               </motion.div>
               {tilt && <Glare bg={glare} />}
               {tilt && <motion.div className="sweep" aria-hidden style={{ x: sweepX }} />}
-              {!g.phone && <StatusBar />}
+              {!g.phone && <StatusBar signal={signal} />}
               <div className="screen-fade" />
               <ScreenNav pathname={pathname} />
+
+              <AnimatePresence>
+                {award && (
+                  <motion.div
+                    className="toast" role="status"
+                    initial={{ opacity: 0, y: -40, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -30, scale: 0.97 }}
+                    transition={{ type: "spring", bounce: 0.25, visualDuration: 0.45 }}
+                  >
+                    <span className="toast-icon" aria-hidden>🏆</span>
+                    <span><b>You've seen every project</b><small>Thanks for looking around. Fancy a chat?</small></span>
+                    <Link className="toast-cta" to="/contact" onClick={() => setAward(false)}>Say hi</Link>
+                    <button className="toast-x" onClick={() => setAward(false)} aria-label="Dismiss">✕</button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               <AnimatePresence>
                 {launching && (
@@ -362,12 +409,14 @@ function Glare({ bg, style }: { bg: MotionValue<string>; style?: CSSProperties }
   return <motion.div className="glare" aria-hidden style={{ ...style, background: bg }} />
 }
 
-function StatusBar() {
+function StatusBar({ signal }: { signal: boolean }) {
   const { time } = useClock()
   return (
     <div className="statusbar" aria-hidden>
       <span>{time}</span>
-      <span>5G<i className="bat" /></span>
+      <span className={signal ? "net" : "net off"}>
+        <span className="bars"><i /><i /><i /><i /></span>{signal ? "5G" : "No service"}<i className="bat" />
+      </span>
     </div>
   )
 }

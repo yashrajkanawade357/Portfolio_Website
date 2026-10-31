@@ -1,14 +1,17 @@
+import { useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
 import { projects } from "../data"
 import { Reveal, useTitle } from "../components/ui"
 import { Foot } from "./Home"
 import NotFound from "./NotFound"
+import { markSeen } from "../components/secret"
 
 export default function Project() {
   const { slug } = useParams()
   const i = projects.findIndex((p) => p.slug === slug)
   const p = projects[i]
   useTitle(p ? p.title : "Not found")
+  useEffect(() => { if (p) markSeen(p.slug, projects.map((x) => x.slug)) }, [p])
   if (!p) return <NotFound />
   const next = projects[(i + 1) % projects.length]
   return (

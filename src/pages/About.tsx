@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom"
+import { useEffect } from "react"
+import { Link, useLocation } from "react-router-dom"
 import { about, communities, numbers, person } from "../data"
 import { CountUp, Reveal, useTitle } from "../components/ui"
 import { Cta, Foot } from "./Home"
@@ -6,6 +7,15 @@ import { Focus, Moment, Skills, Timeline } from "./parts"
 
 export default function About() {
   useTitle("About")
+  const { state } = useLocation()
+  useEffect(() => {
+    if ((state as { focus?: string } | null)?.focus !== "moment") return
+    const t = setTimeout(() => {
+      const m = document.querySelector(".moment"), c = document.querySelector(".screen-content")
+      if (m && c) window.scrollTo({ top: m.getBoundingClientRect().top - c.getBoundingClientRect().top - 40, behavior: "smooth" })
+    }, 450)
+    return () => clearTimeout(t)
+  }, [state])
   return (
     <>
       <section className="sec dark about-hero">

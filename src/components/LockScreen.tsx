@@ -1,17 +1,39 @@
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { AnimatePresence, motion } from "motion/react"
 import { person, projects } from "../data"
 import { useClock } from "./ui"
 
 const vyora = projects.find((p) => p.slug === "vyora")!
 const sindhu = projects.find((p) => p.slug === "project-sindhu")!
 
+/* first visit only: the phone boots before the lock screen lights up */
+function useBoot() {
+  const [booting, setBooting] = useState(() => {
+    try { return !localStorage.getItem("yk-booted") && !matchMedia("(prefers-reduced-motion: reduce)").matches } catch { return false }
+  })
+  const done = () => { setBooting(false); try { localStorage.setItem("yk-booted", "1") } catch { /* private mode */ } }
+  useEffect(() => {
+    if (!booting) return
+    const t = setTimeout(done, 1900)
+    return () => clearTimeout(t)
+  }, [booting])
+  return [booting, done] as const
+}
+
 export default function LockScreen({ onUnfold, style }: { onUnfold: () => void; style: React.CSSProperties }) {
   const { time, date } = useClock()
+  const [booting, skip] = useBoot()
   return (
     <div className="lock" style={style}>
       <img className="lock-photo" src="/media/photos/portrait-studio.webp" alt="" />
       <div className="lock-shade" />
-      <div className="lock-inner">
+      <motion.div
+        className="lock-inner"
+        initial={false}
+        animate={booting ? { opacity: 0, y: 12 } : { opacity: 1, y: 0 }}
+        transition={{ type: "spring", bounce: 0.15, visualDuration: 0.6 }}
+      >
         <div className="lock-date">{date}</div>
         <div className="lock-time" aria-label={`Local time ${time}`}>{time}</div>
         <div className="lock-who">{person.name} · {person.role}</div>
@@ -38,7 +60,22 @@ export default function LockScreen({ onUnfold, style }: { onUnfold: () => void; 
             <img src="/media/icons/github.png" alt="" />
           </a>
         </div>
-      </div>
+      </motion.div>
+
+      <AnimatePresence>
+        {booting && (
+          <motion.button className="boot" onClick={skip} aria-label="Skip intro" exit={{ opacity: 0, transition: { duration: 0.45 } }}>
+            <motion.span
+              className="boot-mark"
+              initial={{ opacity: 0, scale: 0.9, filter: "blur(6px)" }}
+              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+            >YK</motion.span>
+            <span className="boot-bar"><motion.i initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.4, duration: 1.25, ease: [0.6, 0, 0.3, 1] }} /></span>
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
+
