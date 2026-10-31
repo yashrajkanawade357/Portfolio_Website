@@ -55,8 +55,11 @@ function useViewport() {
       // phones resize the viewport when the URL bar slides; only react to real changes
       if (w !== last.w || Math.abs(h - last.h) > 120) { last = { w, h }; setV(last) }
     }
+    // full screen changes the height by less than the URL-bar guard above, so always take it
+    const fs = () => setTimeout(() => { last = { w: window.innerWidth, h: window.innerHeight }; setV(last) }, 60)
     window.addEventListener("resize", on)
-    return () => window.removeEventListener("resize", on)
+    document.addEventListener("fullscreenchange", fs)
+    return () => { window.removeEventListener("resize", on); document.removeEventListener("fullscreenchange", fs) }
   }, [])
   return v
 }
@@ -213,6 +216,30 @@ export default function Shell({ children }: { children: ReactNode }) {
   }, [award])
   const soundOn = useSound()
 
+  // full screen: a toggle in the top bar (browsers only allow it after a click)
+  const canFull = typeof document !== "undefined" && !!document.documentElement.requestFullscreen && !g.phone
+  const [full, setFull] = useState(() => !!document.fullscreenElement)
+  useEffect(() => {
+    const on = () => setFull(!!document.fullscreenElement)
+    document.addEventListener("fullscreenchange", on)
+    return () => document.removeEventListener("fullscreenchange", on)
+  }, [])
+  const toggleFull = () => {
+    play("tap")
+    if (document.fullscreenElement) void document.exitFullscreen().catch(() => {})
+    else void document.documentElement.requestFullscreen().catch(() => {})
+  }
+
+  // before the site starts (once per session, laptops): ask to go full screen
+  const [gate, setGate] = useState(() => {
+    try { return canFull && !document.fullscreenElement && !sessionStorage.getItem("yk-gate") } catch { return false }
+  })
+  const start = (fullscreen: boolean) => {
+    try { sessionStorage.setItem("yk-gate", "1") } catch { /* private mode */ }
+    if (fullscreen) void document.documentElement.requestFullscreen().catch(() => {})
+    setGate(false)
+  }
+
   const unfoldNow = () => window.scrollTo({ top: unfold, behavior: reduce ? "auto" : "smooth" })
 
   // keyboard users: bring a focused link inside the screen into view
@@ -233,10 +260,19 @@ export default function Shell({ children }: { children: ReactNode }) {
       <SceneLayer scene={scene} />
 
       {g.phone && <LaptopHint />}
+      <AnimatePresence>{gate && <StartGate onStart={start} />}</AnimatePresence>
 
       {!g.phone && <header className="topbar">
         <Link to="/" className="logo">{person.name}</Link>
         <div className="top-tools">
+        {canFull && (
+          <button className="sound" aria-pressed={full} onClick={toggleFull} aria-label={full ? "Exit full screen" : "Full screen"}>
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              {full ? <path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" /> : <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />}
+            </svg>
+            <span>{full ? "Exit" : "Full screen"}</span>
+          </button>
+        )}
         <button className="sound" aria-pressed={soundOn} onClick={() => setSound(!soundOn)} aria-label={soundOn ? "Turn sound off" : "Turn sound on"}>
           <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" />
             {soundOn ? <path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
@@ -293,7 +329,7 @@ export default function Shell({ children }: { children: ReactNode }) {
                     <div className="glass off" style={{ inset: `${g.b}px 0 ${g.b}px ${g.b}px`, borderRadius: `${g.r - g.b}px 0 0 ${g.r - g.b}px` }} />
                   </div>
                   <div className="face back" style={{ borderRadius: g.r }} inert={open}>
-                    {fold && <LockScreen onUnfold={unfoldNow} style={lockStyle} />}
+                    {fold && <LockScreen onUnfold={unfoldNow} style={lockStyle} hold={gate} />}
                     {fold && tilt && <Glare bg={glare} style={lockStyle} />}
                   </div>
                 </motion.div>
@@ -361,7 +397,7 @@ export default function Shell({ children }: { children: ReactNode }) {
             {g.portrait && fold && (
               <div style={{ position: "absolute", inset: g.b, borderRadius: g.r - g.b, overflow: "hidden", transform: "translateZ(4px)" }} inert={open}>
                 <motion.div style={{ position: "absolute", inset: 0, y: lockY }}>
-                  <LockScreen onUnfold={unfoldNow} style={{ inset: 0 }} />
+                  <LockScreen onUnfold={unfoldNow} style={{ inset: 0 }} hold={gate} />
                 </motion.div>
               </div>
             )}
@@ -402,6 +438,41 @@ function LaptopHint() {
         </motion.div>
       )}
     </AnimatePresence>
+  )
+}
+
+/* the start screen: offer full screen before the phone boots (browsers only allow it after a click) */
+function StartGate({ onStart }: { onStart: (fullscreen: boolean) => void }) {
+  useEffect(() => {
+    const key = (e: KeyboardEvent) => { if (e.key === "Enter") onStart(true); if (e.key === "Escape") onStart(false) }
+    window.addEventListener("keydown", key)
+    document.documentElement.style.overflow = "hidden"
+    return () => { window.removeEventListener("keydown", key); document.documentElement.style.overflow = "" }
+  }, [onStart])
+  return (
+    <motion.div
+      className="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title"
+      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.4 } }}
+    >
+      <motion.div
+        className="gate-card"
+        initial={{ opacity: 0, y: 24, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -12, scale: 0.98 }}
+        transition={{ type: "spring", bounce: 0.2, visualDuration: 0.5, delay: 0.1 }}
+      >
+        <span className="gate-mark" aria-hidden>YK</span>
+        <p className="label muted">A small request · {person.name}</p>
+        <h1 id="gate-title" className="display">Could I borrow your <span className="accent">whole screen?</span></h1>
+        <p className="gate-text">Promise I'll give it back. My phone just unfolds better without tabs and toolbars elbowing in. Press Esc whenever you want your window back.</p>
+        <div className="gate-actions">
+          <button className="btn btn-pulse" onClick={() => onStart(true)} autoFocus>
+            <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg>
+            Sure, take it
+          </button>
+          <button className="btn gate-skip" onClick={() => onStart(false)}>I'll stay in the window</button>
+        </div>
+        <p className="gate-note">Either way, thanks for stopping by 🙂</p>
+      </motion.div>
+    </motion.div>
   )
 }
 

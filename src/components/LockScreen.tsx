@@ -8,22 +8,22 @@ const vyora = projects.find((p) => p.slug === "vyora")!
 const sindhu = projects.find((p) => p.slug === "project-sindhu")!
 
 /* first visit only: the phone boots before the lock screen lights up */
-function useBoot() {
+function useBoot(hold: boolean) {
   const [booting, setBooting] = useState(() => {
     try { return !localStorage.getItem("yk-booted") && !matchMedia("(prefers-reduced-motion: reduce)").matches } catch { return false }
   })
   const done = () => { setBooting(false); try { localStorage.setItem("yk-booted", "1") } catch { /* private mode */ } }
   useEffect(() => {
-    if (!booting) return
+    if (!booting || hold) return
     const t = setTimeout(done, 1900)
     return () => clearTimeout(t)
-  }, [booting])
+  }, [booting, hold])
   return [booting, done] as const
 }
 
-export default function LockScreen({ onUnfold, style }: { onUnfold: () => void; style: React.CSSProperties }) {
+export default function LockScreen({ onUnfold, style, hold = false }: { onUnfold: () => void; style: React.CSSProperties; hold?: boolean }) {
   const { time, date } = useClock()
-  const [booting, skip] = useBoot()
+  const [booting, skip] = useBoot(hold)
   return (
     <div className="lock" style={style}>
       <img className="lock-photo" src="/media/photos/portrait-studio.webp" alt="" />
@@ -63,7 +63,7 @@ export default function LockScreen({ onUnfold, style }: { onUnfold: () => void; 
       </motion.div>
 
       <AnimatePresence>
-        {booting && (
+        {booting && !hold && (
           <motion.button className="boot" onClick={skip} aria-label="Skip intro" exit={{ opacity: 0, transition: { duration: 0.45 } }}>
             <motion.span
               className="boot-mark"

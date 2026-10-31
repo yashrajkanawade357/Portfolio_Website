@@ -42,6 +42,16 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .topbar > * { pointer-events: auto; }
 .logo { font-family: var(--display); font-weight: 900; font-size: 20px; letter-spacing: 0.01em; text-transform: uppercase; }
 .top-tools { display: flex; align-items: center; gap: 8px; }
+/* start screen: offer full screen before the phone boots */
+.gate { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 24px; background: rgba(8,8,8,.72); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+.gate-card { width: min(520px, 100%); display: grid; justify-items: start; gap: 12px; padding: 34px 32px 26px; border-radius: 28px; color: #f4f3f0;
+  background: linear-gradient(160deg, #1b1b1d, #0b0b0b 60%); box-shadow: 0 40px 80px -30px rgba(0,0,0,.8), inset 0 0 0 1px rgba(255,255,255,.08); }
+.gate-mark { font-family: var(--display); font-weight: 900; font-size: 44px; line-height: 1; color: var(--pulse); text-shadow: 0 0 22px rgba(245,197,24,.45); margin-bottom: 6px; }
+.gate-card h1 { font-size: clamp(40px, 6vw, 60px); line-height: 0.92; }
+.gate-text { font-size: 15px; line-height: 1.5; color: #c9c6bf; max-width: 40ch; }
+.gate-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+.gate-skip { background: rgba(255,255,255,.08); color: #f4f3f0; box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); }
+.gate-note { font: 500 11px var(--mono); letter-spacing: 0.04em; color: #8d8982; margin-top: 4px; }
 .sound { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 500;
   background: color-mix(in srgb, var(--page-ink) 7%, transparent); color: var(--page-ink); }
 .sound[aria-pressed="true"] { background: var(--page-ink); color: var(--page-bg); }
