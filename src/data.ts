@@ -193,6 +193,12 @@ export const hackathons: { title: string; org: string; when?: string }[] = [
   { title: "Build & Beyond", org: "Whitehats Club · VIT", when: "2026" },
 ]
 
+export const events = [
+  { title: "CASA — speaker session on mental wellbeing", org: "E-Cell VIT × Office of Students' Welfare", when: "Oct 2026",
+    detail: "Helped organise a speaker session with Arouba Kabir Pathan, Founder of Enso Wellness, counselling psychologist and mental health thought leader, on mental health, emotional wellbeing and building a healthier future. Rajaji Hall, VIT, 27 October 2026.",
+    photo: "/media/photos/casa-2026.webp", alt: "Yashraj at the CASA speaker session he helped organise for E-Cell VIT" },
+]
+
 export const conferences = [
   { title: "Multidisciplinary Project Display — Terra-Flow", org: "School of Civil Engineering · VIT", when: "Apr 2026",
     detail: "One of three projects chosen to represent the School of Civil Engineering. Presented to the Director, HODs, professors and research scholars." },

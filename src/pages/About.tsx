@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { about, communities, numbers, person } from "../data"
 import { CountUp, Reveal, useTitle } from "../components/ui"
 import { Cta, Foot } from "./Home"
-import { Focus, Skills, Timeline } from "./parts"
+import { Focus, Moment, Skills, Timeline } from "./parts"
 
 export default function About() {
   useTitle("About")
@@ -40,6 +40,10 @@ export default function About() {
 
       <section className="sec light">
         <Skills />
+      </section>
+
+      <section className="sec dark">
+        <Moment />
       </section>
 
       <section className="sec light">

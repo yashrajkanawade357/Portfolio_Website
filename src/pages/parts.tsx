@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { conferences, experience, focus, hackathons, skills, type Project } from "../data"
+import { conferences, events, experience, focus, hackathons, skills, type Project } from "../data"
 import { Reveal } from "../components/ui"
 import { useLaunch } from "../components/launch"
 
@@ -27,7 +27,7 @@ export function ProjectCard({ p }: { p: Project }) {
   )
 }
 
-/* experience, hackathons and conferences, as separate lists */
+/* experience, events, hackathons and conferences, as separate lists */
 export function Timeline() {
   return (
     <>
@@ -36,6 +36,18 @@ export function Timeline() {
         {experience.map((e) => (
           <div key={e.title + e.org}>
             <span className="t">{e.title}<small className="d muted">{e.detail}</small></span>
+            <span className="o muted">{e.org}</span><span className="label muted">{e.when}</span>
+          </div>
+        ))}
+      </div>
+      <p className="label muted" style={{ margin: "34px 0 14px" }}>Events organised</p>
+      <div className="lines">
+        {events.map((e) => (
+          <div key={e.title}>
+            <span className="t with-thumb">
+              <img src={e.photo} alt="" decoding="async" />
+              <span>{e.title}<small className="d muted">{e.detail}</small></span>
+            </span>
             <span className="o muted">{e.org}</span><span className="label muted">{e.when}</span>
           </div>
         ))}
@@ -97,5 +109,21 @@ export function Skills() {
         ))}
       </div>
     </>
+  )
+}
+
+/* a moment worth a bigger photo: the latest event I organised */
+export function Moment() {
+  const e = events[0]
+  return (
+    <div className="moment">
+      <figure><img src={e.photo} alt={e.alt} decoding="async" /></figure>
+      <div>
+        <p className="label muted">Moments · {e.when}</p>
+        <h2 className="display">Organising <span className="accent">CASA.</span></h2>
+        <p className="lead">{e.detail}</p>
+        <p className="label muted" style={{ marginTop: 16 }}>{e.org}</p>
+      </div>
+    </div>
   )
 }
