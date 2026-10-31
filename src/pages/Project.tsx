@@ -26,7 +26,7 @@ export default function Project() {
         <Reveal className="p-img"><img src={p.cover} alt={`${p.title}`} /></Reveal>
         <div className="p-body">{p.body.map((t) => <p key={t.slice(0, 24)}>{t}</p>)}</div>
         {p.live && <a className="btn btn-ink" href={p.live} target="_blank" rel="noreferrer" style={{ marginBottom: 28 }}>{p.status ? "See the current build ↗" : "Visit the live site ↗"}</a>}
-        <Reveal className="p-img"><img src={p.still} alt={`${p.title}, another view`} loading="lazy" /></Reveal>
+        <Reveal className="p-img"><img src={p.still} alt={`${p.title}, another view`} decoding="async" fetchPriority="low" /></Reveal>
       </section>
       <section className="sec light">
         <div className="p-next">

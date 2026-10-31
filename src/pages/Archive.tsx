@@ -29,7 +29,7 @@ export default function Archive() {
         <div className="certs">
           {certificates.map((cert, i) => (
             <button key={cert.img} className="cert" onClick={() => setOpen(i)} aria-label={`View certificate: ${cert.title}`}>
-              <motion.div className="frame" layoutId={`cert-${i}`}><img src={cert.img} alt="" loading="lazy" /></motion.div>
+              <motion.div className="frame" layoutId={`cert-${i}`}><img src={cert.img} alt="" decoding="async" fetchPriority="low" /></motion.div>
               <b>{cert.title}</b>
               <small className="label muted">{cert.issuer} · 2026</small>
             </button>

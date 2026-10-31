@@ -17,7 +17,7 @@ export function ProjectCard({ p }: { p: Project }) {
       }}
     >
       <div className="card-media">
-        <img src={p.cover} alt={`${p.title} cover`} loading="lazy" />
+        <img src={p.cover} alt={`${p.title} cover`} decoding="async" fetchPriority="low" />
         <span className="card-num" style={{ background: p.accent, color: p.accent === "#f5c518" ? "#111" : "#fff" }}>{p.number}</span>
       </div>
       <div className="card-meta"><span className="label muted">{p.category}{p.status && <span className="wip">{p.status}</span>}</span><span className="label muted">{p.year}</span></div>
