@@ -105,6 +105,14 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .statusbar .bat { display: inline-block; width: 20px; height: 10px; border: 1.5px solid currentColor; border-radius: 3px; margin-left: 8px; position: relative; vertical-align: -1px; }
 .statusbar .bat::after { content: ""; position: absolute; inset: 1.5px 5px 1.5px 1.5px; background: currentColor; border-radius: 1px; }
 
+/* light on the glass: follows the cursor; a sweep runs across when the hinge locks flat */
+.glare { position: absolute; inset: 0; z-index: 5; pointer-events: none; mix-blend-mode: soft-light; }
+.sweep { position: absolute; inset: 0; z-index: 5; pointer-events: none;
+  background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,.16) 50%, transparent 62%); }
+/* a project card growing into the full screen */
+.launch { position: absolute; z-index: 8; overflow: hidden; pointer-events: none; box-shadow: 0 30px 60px -20px rgba(0,0,0,.6); }
+.launch img { width: 100%; height: 100%; object-fit: cover; }
+
 .screen-fade { position: absolute; inset: auto 0 0 0; height: 84px; z-index: 6; pointer-events: none;
   background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.18));
   backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
@@ -163,6 +171,13 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 .btn { display: inline-flex; align-items: center; gap: 6px; padding: 12px 18px; border-radius: 999px; font-size: 14px; font-weight: 600; transition: transform .25s, background .25s, color .25s; }
 .btn:hover { transform: translateY(-2px); }
+/* press feedback: things you tap give a little, then spring back */
+.btn, .screen-nav a, .switch button, .finishes button, .chip, .note, .card-media, .filters button {
+  transition-property: scale, transform, background, color, box-shadow; transition-duration: .5s, .25s, .25s, .25s, .25s;
+  transition-timing-function: cubic-bezier(.34, 1.56, .64, 1), ease, ease, ease, ease; }
+.btn:active, .screen-nav a:active, .switch button:active, .chip:active, .note:active, .filters button:active { scale: .94; transition-duration: .08s; }
+.finishes button:active { scale: .8; transition-duration: .08s; }
+.card:active .card-media { scale: .97; transition-duration: .1s; }
 .btn-pulse { background: var(--pulse); color: var(--ink); }
 .btn-ink { background: var(--ink); color: var(--bone); }
 .btn-ghost { box-shadow: inset 0 0 0 1px currentColor; }
@@ -289,4 +304,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 @media (prefers-reduced-motion: reduce) {
   .card-media img, .cert .frame img, .btn, .index a { transition: none; }
+  .screen-nav a, .switch button, .finishes button, .chip, .note, .card-media, .filters button { transition: none; }
+  .btn:active, .screen-nav a:active, .card:active .card-media { scale: 1; }
 }

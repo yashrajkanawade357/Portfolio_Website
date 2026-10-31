@@ -1,10 +1,21 @@
 import { Link } from "react-router-dom"
 import { conferences, experience, focus, hackathons, skills, type Project } from "../data"
 import { Reveal } from "../components/ui"
+import { useLaunch } from "../components/launch"
 
 export function ProjectCard({ p }: { p: Project }) {
+  const launch = useLaunch()
+  const to = `/projects/${p.slug}`
   return (
-    <Link className="card" to={`/projects/${p.slug}`}>
+    <Link
+      className="card" to={to}
+      onClick={(e) => {
+        // plain clicks open the project like an app; new-tab clicks behave as usual
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return
+        const media = e.currentTarget.querySelector<HTMLElement>(".card-media")
+        if (media && launch(p.cover, media, to, p.accent)) e.preventDefault()
+      }}
+    >
       <div className="card-media">
         <img src={p.cover} alt={`${p.title} cover`} loading="lazy" />
         <span className="card-num" style={{ background: p.accent, color: p.accent === "#f5c518" ? "#111" : "#fff" }}>{p.number}</span>

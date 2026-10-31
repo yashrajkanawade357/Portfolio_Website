@@ -1,11 +1,28 @@
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import {
-  AnimatePresence, motion, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform,
+  AnimatePresence, animate, motion, useMotionTemplate, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll,
+  useSpring, useTransform, type MotionValue,
 } from "motion/react"
 import LockScreen from "./LockScreen"
+import { LaunchContext, type Launch } from "./launch"
 import { person } from "../data"
 import { useClock } from "./ui"
+
+/* pages sit left to right in nav order, so transitions slide the way you're going */
+const ORDER = ["/", "/work", "/projects", "/archive", "/about", "/contact"]
+const rank = (p: string) => {
+  const i = ORDER.findIndex((o) => (o === "/" ? p === "/" : p.startsWith(o)))
+  return i < 0 ? ORDER.length : i
+}
+const PAGE = {
+  enter: (d: number) => ({ opacity: 0, x: d * 56 }),
+  center: { opacity: 1, x: 0 },
+  exit: (d: number) => ({ opacity: 0, x: d * -56 }),
+}
+
+/* a short tap on phones that support it (Android); ignored elsewhere */
+export const tick = () => { try { if (matchMedia("(pointer: coarse)").matches) navigator.vibrate?.(8) } catch { /* unsupported */ } }
 
 /* ── settings the visitor can change ─────────────────────────────── */
 const SCENES = [["glow", "Glow"], ["orbit", "Orbit"]] as const
@@ -112,8 +129,68 @@ export default function Shell({ children }: { children: ReactNode }) {
   const shadowScale = useTransform(() => 0.5 + 0.5 * ue.get())
 
   const [open, setOpen] = useState(!fold)
-  useMotionValueEvent(u, "change", (v) => setOpen(v > 0.6))
   useEffect(() => setOpen(u.get() > 0.6), [fold, u])
+
+  // the hinge "clicks" when it reaches flat: a tiny settle and a light sweep across the screen
+  const settle = useMotionValue(1)
+  const sweep = useMotionValue(-120)
+  const sweepX = useMotionTemplate`${sweep}%`
+  const locked = useRef(true)
+  useMotionValueEvent(u, "change", (v) => {
+    setOpen(v > 0.6)
+    if (!fold || g.portrait || reduce) return
+    if (v < 0.9) locked.current = false
+    else if (v >= 0.999 && !locked.current) {
+      locked.current = true
+      animate(settle, [1, 1.012, 1], { duration: 0.42, ease: "easeOut" })
+      sweep.set(-120)
+      animate(sweep, 120, { duration: 0.9, ease: [0.3, 0, 0.2, 1] })
+    }
+  })
+
+  // on a laptop the phone leans toward the cursor and light glints off the glass
+  const px = useMotionValue(0.5)
+  const py = useMotionValue(0.5)
+  const sx = useSpring(px, { stiffness: 90, damping: 18 })
+  const sy = useSpring(py, { stiffness: 90, damping: 18 })
+  const tiltY = useTransform(() => (sx.get() - 0.5) * 9)
+  const tiltX = useTransform(() => (0.5 - sy.get()) * 7)
+  const glare = useMotionTemplate`radial-gradient(70% 90% at ${useTransform(() => sx.get() * 100)}% ${useTransform(() => sy.get() * 100)}%, rgba(255,255,255,.13), rgba(255,255,255,0) 60%)`
+  const tilt = !g.portrait && !reduce
+  useEffect(() => {
+    if (!tilt || !matchMedia("(pointer: fine)").matches) return
+    const move = (e: PointerEvent) => { px.set(e.clientX / window.innerWidth); py.set(e.clientY / window.innerHeight) }
+    const leave = () => { px.set(0.5); py.set(0.5) }
+    window.addEventListener("pointermove", move)
+    document.documentElement.addEventListener("pointerleave", leave)
+    return () => { window.removeEventListener("pointermove", move); document.documentElement.removeEventListener("pointerleave", leave) }
+  }, [tilt, px, py])
+
+  // page transitions: slide in the direction of travel
+  const prevPath = useRef(pathname)
+  const dir = rank(pathname) >= rank(prevPath.current) ? 1 : -1
+  useEffect(() => { prevPath.current = pathname }, [pathname])
+
+  // opening a project card: its image grows to fill the screen, then the page loads underneath
+  const navigate = useNavigate()
+  const screenRef = useRef<HTMLDivElement>(null)
+  const [launching, setLaunching] = useState<null | { src: string; to: string; tint: string; x: number; y: number; w: number; h: number }>(null)
+  const launch: Launch = (src, from, to, tint) => {
+    const scr = screenRef.current
+    if (!scr || reduce || launching) return false
+    const s = scr.getBoundingClientRect(), r = from.getBoundingClientRect()
+    const k = scr.offsetWidth / s.width
+    setLaunching({ src, to, tint, x: (r.left - s.left) * k, y: (r.top - s.top) * k, w: r.width * k, h: r.height * k })
+    tick()
+    // the page swaps in underneath while the image is still settling
+    setTimeout(() => navigate(to), 380)
+    return true
+  }
+  useEffect(() => {
+    if (!launching || pathname !== launching.to) return
+    const t = setTimeout(() => setLaunching(null), 420)
+    return () => clearTimeout(t)
+  }, [pathname, launching])
 
   const unfoldNow = () => window.scrollTo({ top: unfold, behavior: reduce ? "auto" : "smooth" })
 
@@ -160,7 +237,7 @@ export default function Shell({ children }: { children: ReactNode }) {
 
           <motion.div
             className="device"
-            style={{ width: g.W, height: g.H, x: g.portrait ? 0 : devX }}
+            style={{ width: g.W, height: g.H, x: g.portrait ? 0 : devX, scale: settle, ...(tilt ? { rotateX: tiltX, rotateY: tiltY } : {}) }}
             initial={{ y: 70 }}
             animate={{ y: 0 }}
             transition={{ type: "spring", bounce: 0.15, visualDuration: 0.9 }}
@@ -187,6 +264,7 @@ export default function Shell({ children }: { children: ReactNode }) {
                   </div>
                   <div className="face back" style={{ borderRadius: g.r }} inert={open}>
                     {fold && <LockScreen onUnfold={unfoldNow} style={lockStyle} />}
+                    {fold && tilt && <Glare bg={glare} style={lockStyle} />}
                   </div>
                 </motion.div>
               </>
@@ -194,19 +272,42 @@ export default function Shell({ children }: { children: ReactNode }) {
 
             {/* the inner screen: wakes once the device is open */}
             <motion.div
+              ref={screenRef}
               className="screen"
               style={{ left: g.b, top: g.b, width: sw, height: sh, borderRadius: g.r - g.b, opacity: g.portrait ? 1 : wake, pointerEvents: open || g.portrait ? "auto" : "none" }}
             >
               <motion.div ref={contentRef} className="screen-content" style={{ y: contentY }} onFocus={onFocus}>
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.div key={pathname} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
-                    {children}
-                  </motion.div>
-                </AnimatePresence>
+                <LaunchContext.Provider value={launch}>
+                  <AnimatePresence mode="wait" initial={false} custom={dir}>
+                    <motion.div
+                      key={pathname} custom={dir} variants={PAGE} initial="enter" animate="center" exit="exit"
+                      transition={{ x: { type: "spring", bounce: 0, visualDuration: 0.34 }, opacity: { duration: 0.22 } }}
+                    >
+                      {children}
+                    </motion.div>
+                  </AnimatePresence>
+                </LaunchContext.Provider>
               </motion.div>
+              {tilt && <Glare bg={glare} />}
+              {tilt && <motion.div className="sweep" aria-hidden style={{ x: sweepX }} />}
               {!g.phone && <StatusBar />}
               <div className="screen-fade" />
               <ScreenNav pathname={pathname} />
+
+              <AnimatePresence>
+                {launching && (
+                  <motion.div
+                    className="launch" aria-hidden
+                    style={{ background: launching.tint }}
+                    initial={{ left: launching.x, top: launching.y, width: launching.w, height: launching.h, borderRadius: 16 }}
+                    animate={{ left: 0, top: 0, width: sw, height: sh, borderRadius: g.r - g.b }}
+                    exit={{ opacity: 0, transition: { duration: 0.35 } }}
+                    transition={{ type: "spring", bounce: 0.1, visualDuration: 0.42 }}
+                  >
+                    <img src={launching.src} alt="" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
 
             {/* phones: the cover screen slides up to reveal the inside */}
@@ -257,6 +358,10 @@ function LaptopHint() {
   )
 }
 
+function Glare({ bg, style }: { bg: MotionValue<string>; style?: CSSProperties }) {
+  return <motion.div className="glare" aria-hidden style={{ ...style, background: bg }} />
+}
+
 function StatusBar() {
   const { time } = useClock()
   return (
@@ -275,7 +380,7 @@ function ScreenNav({ pathname }: { pathname: string }) {
       {NAV.map(([to, label]) => {
         const active = to === "/" ? pathname === "/" : pathname.startsWith(to) || (to === "/work" && pathname.startsWith("/projects"))
         return (
-          <Link key={to} to={to} aria-current={active ? "page" : undefined}>
+          <Link key={to} to={to} aria-current={active ? "page" : undefined} onClick={tick}>
             {active && <motion.span layoutId="nav-pill" className="pill" transition={{ type: "spring", bounce: 0.2, visualDuration: 0.35 }} />}
             <span>{label}</span>
           </Link>
