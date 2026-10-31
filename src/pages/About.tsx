@@ -39,7 +39,7 @@ export default function About() {
         <div className="sec-head"><h2 className="display h2">My journey</h2><span className="label muted">Based in {person.basedIn}</span></div>
         <div className="essay">
           {about.map((a) => (
-            <Reveal key={a.h}><div><h3 className="label">{a.h}</h3><p>{a.p}</p></div></Reveal>
+            <Reveal key={a.h}><div className="essay-row"><h3 className="label">{a.h}</h3><p>{a.p}</p></div></Reveal>
           ))}
         </div>
       </section>
