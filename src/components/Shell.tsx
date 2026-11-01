@@ -87,8 +87,8 @@ export default function Shell({ children }: { children: ReactNode }) {
   const vp = useViewport()
   const g = geometry(vp.w, vp.h)
   const reduce = useReducedMotion()
-  const [scene, setScene] = useStored<Scene>("yk-scene", "glow", SCENES.map((s) => s[0]))
-  const [finish, setFinish] = useStored<Finish>("yk-finish", "titanium", Object.keys(FINISHES))
+  const [scene, setScene] = useStored<Scene>("yk-scene", "orbit", SCENES.map((s) => s[0]))
+  const [finish, setFinish] = useStored<Finish>("yk-finish", "coral", Object.keys(FINISHES))
 
   const sw = g.W - 2 * g.b
   const sh = g.H - 2 * g.b
