@@ -76,14 +76,14 @@ export const projects: Project[] = [
   },
   {
     slug: "vault-zero", number: "04", title: "Vault-Zero", category: "Web app", client: "AWS Student Builder Group · Team 2", year: "2026",
-    role: "Frontend · Integration · Deployment", status: "In progress", accent: "#e8743b",
+    role: "Frontend · Integration · Deployment", accent: "#e8743b", live: "https://vault-zero-green.vercel.app/",
     cover: P + "07-vault-zero.webp", still: P + "07-vault-zero-still.webp",
     summary: "Share it, then burn it: files sent through a password-locked link that self-destructs when its time or downloads run out.",
     body: [
       "Vault-Zero sends sensitive files through a password-protected link that self-destructs. The sender chooses how long the link lives (10 minutes to 24 hours) and how many times it can be opened. When either runs out, the files are deleted and the link stops working. No account needed.",
       "I built the frontend: a landing page with a live demo vault, an upload portal with live progress, and the receiver's vault with a password lock screen, a countdown to the burn and per-file downloads. It has a bold neo-brutalist look, and a built-in mock API lets the whole flow run without the backend.",
       "I also connected it to my teammate Ayush's API (Express 5, Prisma and Postgres, with Argon2-hashed passwords, rate limits and an automatic cleanup worker), and set the project up to run on Vercel with Supabase Storage, using short-lived signed upload and download links, or on a single server with Docker.",
-      "Up to 10 files per vault, 50 MB each and 100 MB in total. Built as Team 2's project for the AWS Student Builder Group.",
+      "Up to 10 files per vault, 50 MB each and 100 MB in total. Built as Team 2's project for the AWS Student Builder Group, and live now.",
     ],
     stack: ["React", "TypeScript", "Tailwind CSS", "Express", "Prisma", "Supabase"],
   },
