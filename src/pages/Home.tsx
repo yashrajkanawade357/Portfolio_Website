@@ -17,8 +17,8 @@ export default function Home() {
             <Link className="btn btn-ghost" to="/contact">Say hello</Link>
           </div>
         </div>
-        <figure className="intro-photo">
-          <img src="/media/photos/portrait-closeup.webp" alt="Yashraj Kanawade smiling, standing by a wall of potted plants" />
+        <figure className="intro-stage">
+          <img src="/media/photos/standing-bust.webp" alt="Yashraj Kanawade smiling" decoding="async" fetchPriority="high" />
         </figure>
       </section>
 

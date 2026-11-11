@@ -28,6 +28,7 @@ export default function LockScreen({ onUnfold, style, hold = false }: { onUnfold
     <div className="lock" style={style}>
       <img className="lock-photo" src="/media/photos/portrait-studio.webp" alt="" />
       <div className="lock-shade" />
+      <div className="lock-grain" aria-hidden />
       <motion.div
         className="lock-inner"
         initial={false}

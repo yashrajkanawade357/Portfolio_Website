@@ -170,6 +170,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .lock { position: absolute; overflow: hidden; container-type: inline-size; color: #fff; background: #0a0a0a; }
 /* the photo sits low so the clock and name read on the dark studio backdrop above the head */
 .lock-photo { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 78%; object-fit: cover; object-position: center top; }
+/* fine film grain over the photo: takes the plastic smoothness off */
+.lock-grain { position: absolute; inset: 0; pointer-events: none; opacity: .3; mix-blend-mode: overlay; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); background-size: 200px; }
 .lock-shade { position: absolute; inset: 0; background: linear-gradient(180deg, #0a0a0a 22%, rgba(10,10,10,0) 40%, rgba(0,0,0,0) 58%, rgba(0,0,0,.75)); }
 .lock-inner { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; padding: 9cqw 6cqw 5cqw; }
 .lock-time { font-family: var(--display); font-weight: 800; font-size: 25cqw; line-height: 0.9; letter-spacing: -0.01em; margin-top: 3cqw; }
@@ -226,6 +228,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .intro { display: grid; grid-template-columns: 1.15fr 1fr; gap: max(20px, 4cqw); align-items: center; padding-top: max(64px, 7cqw); }
 .hero-name { font-size: max(64px, 12.5cqw); margin: 14px 0 18px; }
 .intro .row { margin-top: 26px; }
+/* a light poster card inside the dark intro: his black tee needs a light backdrop */
+.intro-stage { position: relative; isolation: isolate; border-radius: 20px; overflow: hidden; aspect-ratio: 4 / 5; min-height: 0;
+  background: radial-gradient(75% 55% at 18% 10%, rgba(245,197,24,.6), transparent 70%), radial-gradient(85% 60% at 92% 100%, rgba(228,138,111,.6), transparent 72%), var(--bone); }
+.intro-stage img { position: absolute; left: 50%; bottom: 0; height: 95%; width: auto; max-width: none; translate: -50% 0; }
 .intro-photo { border-radius: 18px; overflow: hidden; aspect-ratio: 4 / 5; }
 .intro-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%; }
 
@@ -360,6 +366,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @container screen (max-width: 640px) {
   .intro, .about-hero, .contact-grid, .moment { grid-template-columns: 1fr; }
   .intro-photo, .about-hero figure { aspect-ratio: 4 / 4.2; }
+  .intro-stage { aspect-ratio: 4 / 4.6; max-width: 360px; justify-self: center; width: 100%; }
   .numbers { grid-template-columns: repeat(2, 1fr); row-gap: 26px; }
   .cards, .certs { grid-template-columns: 1fr; }
   .lines > * { grid-template-columns: 1fr auto; }
