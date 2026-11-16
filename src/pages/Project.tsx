@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
 import { projects } from "../data"
-import { Reveal, useTitle } from "../components/ui"
+import { Reveal, Rise, useTitle } from "../components/ui"
 import { Foot } from "./Home"
 import NotFound from "./NotFound"
 import { markSeen } from "../components/secret"
@@ -18,7 +18,7 @@ export default function Project() {
     <>
       <section className="sec light" style={{ paddingTop: "max(64px, 7cqw)" }}>
         <p className="label muted">{p.number} · {p.category}{p.status && <span className="wip">{p.status}</span>}</p>
-        <h1 className="display p-title">{p.title}</h1>
+        <h1 className="display p-title"><Rise key={p.slug} text={p.title} /></h1>
         <dl className="p-meta">
           <div><dt className="label muted">Client</dt><dd>{p.client}</dd></div>
           <div><dt className="label muted">Year</dt><dd>{p.year}{p.status ? ` · ${p.status.toLowerCase()}` : ""}</dd></div>

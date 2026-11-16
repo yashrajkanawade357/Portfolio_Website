@@ -1,9 +1,10 @@
 import { useEffect } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { about, communities, numbers, person } from "../data"
-import { CountUp, Reveal, useTitle } from "../components/ui"
+import { CountUp, Reveal, Rise, useTitle } from "../components/ui"
 import { Cta, Foot } from "./Home"
-import { Focus, Moment, Skills, Timeline } from "./parts"
+import { Focus, Moment, Timeline } from "./parts"
+import Exploded from "../components/Exploded"
 
 export default function About() {
   useTitle("About")
@@ -22,7 +23,7 @@ export default function About() {
         <figure><img src="/media/photos/about-hero.webp" alt="Yashraj Kanawade standing with arms crossed by a wall of potted plants" /></figure>
         <div>
           <p className="label muted">About</p>
-          <h1 className="display">Stay curious,<br /><span className="accent">keep building.</span></h1>
+          <h1 className="display"><Rise text="Stay curious," /><br /><span className="accent"><Rise text="keep building." delay={0.25} /></span></h1>
           <p className="lead">I'm {person.name}, a Computer Science and Engineering student at VIT Vellore, graduating in 2029. I enjoy understanding how technology works and building things that solve real problems, with a focus on software engineering and AI/ML, and the middle point between them: AI architecture, NLP and deep learning.</p>
           <div className="row" style={{ marginTop: 22 }}><Link className="btn btn-pulse" to="/contact">Let's connect ↗</Link></div>
         </div>
@@ -36,7 +37,7 @@ export default function About() {
       </section>
 
       <section className="sec light">
-        <div className="sec-head"><h2 className="display h2">My journey</h2><span className="label muted">Based in {person.basedIn}</span></div>
+        <div className="sec-head"><h2 className="display h2"><Rise text="My journey" /></h2><span className="label muted">Based in {person.basedIn}</span></div>
         <div className="essay">
           {about.map((a) => (
             <Reveal key={a.h}><div className="essay-row"><h3 className="label">{a.h}</h3><p>{a.p}</p></div></Reveal>
@@ -48,9 +49,7 @@ export default function About() {
         <Focus />
       </section>
 
-      <section className="sec light">
-        <Skills />
-      </section>
+      <Exploded />
 
       <section className="sec dark">
         <Moment />

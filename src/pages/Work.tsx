@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { AnimatePresence, motion } from "motion/react"
 import { categories, projects, type Category } from "../data"
-import { useTitle } from "../components/ui"
+import { Rise, useTitle } from "../components/ui"
 import { AppGrid, ProjectCard } from "./parts"
 import { Cta, Foot } from "./Home"
 
@@ -15,7 +15,7 @@ export default function Work() {
   return (
     <>
       <section className="sec light" style={{ paddingTop: "max(64px, 7cqw)" }}>
-        <h1 className="display p-title" style={{ marginTop: 0 }}>Work</h1>
+        <h1 className="display p-title" style={{ marginTop: 0 }}><Rise text="Work" /></h1>
         <p className="label muted">Selected projects · 2025—26</p>
         <p className="lead" style={{ marginTop: 14 }}>AI products, full-stack platforms and hackathon builds. Open a project for the full story.</p>
 

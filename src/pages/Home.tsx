@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { communities, numbers, person, projects } from "../data"
-import { CountUp, Reveal, useTitle } from "../components/ui"
+import { CountUp, Reveal, Rise, useTitle } from "../components/ui"
 import { Focus, ProjectCard, Skills, Timeline } from "./parts"
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
       <section className="sec dark intro">
         <div>
           <p className="label muted">{person.roleLong}</p>
-          <h1 className="display hero-name">{person.first}<br /><span className="accent">{person.last}</span></h1>
+          <h1 className="display hero-name"><Rise text={person.first} /><br /><span className="accent"><Rise text={person.last} delay={0.2} /></span></h1>
           <p className="lead">{person.tagline}</p>
           <div className="row">
             <Link className="btn btn-pulse" to="/work">See the work ↗</Link>
@@ -33,7 +33,7 @@ export default function Home() {
 
       <section className="sec light">
         <div className="sec-head">
-          <h2 className="display h2">Selected work</h2>
+          <h2 className="display h2"><Rise text="Selected work" /></h2>
           <Link className="link-arrow" to="/work">All projects ↗</Link>
         </div>
         <div className="cards">
@@ -67,7 +67,7 @@ export default function Home() {
 export function Cta({ line = "Have an idea that needs building?" }: { line?: string }) {
   return (
     <section className="sec dark cta">
-      <h2 className="display">{line}</h2>
+      <h2 className="display"><Rise text={line} /></h2>
       <Link className="btn btn-pulse" to="/contact">Get in touch ↗</Link>
     </section>
   )

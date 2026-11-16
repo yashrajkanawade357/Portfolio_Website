@@ -47,3 +47,26 @@ export function Reveal({ children, delay = 0, className }: { children: ReactNode
     </motion.div>
   )
 }
+
+/** A heading that builds itself: each letter rises from behind a mask when it enters the screen. */
+const RISE_WORD = { down: {}, up: {} }
+const RISE_CH = { down: { y: "112%" }, up: { y: "0%", transition: { type: "spring" as const, bounce: 0, visualDuration: 0.55 } } }
+export function Rise({ text, delay = 0 }: { text: string; delay?: number }) {
+  const words = text.split(" ")
+  return (
+    <>
+      <span className="sr-only">{text}</span>
+      <motion.span
+        className="rise" aria-hidden initial="down" whileInView="up" viewport={{ once: true, amount: 0.4 }}
+        variants={RISE_WORD} transition={{ staggerChildren: 0.028, delayChildren: delay }}
+      >
+        {words.map((w, wi) => (
+          <span key={wi}>
+            {wi > 0 && " "}
+            <span className="rise-word">{[...w].map((ch, ci) => <motion.span key={ci} className="rise-ch" variants={RISE_CH}>{ch}</motion.span>)}</span>
+          </span>
+        ))}
+      </motion.span>
+    </>
+  )
+}

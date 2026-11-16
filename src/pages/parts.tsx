@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { conferences, events, experience, focus, hackathons, projects, skills, type Project } from "../data"
-import { Reveal } from "../components/ui"
+import { Reveal, Rise } from "../components/ui"
 import { useLaunch } from "../components/launch"
 
 export function ProjectCard({ p }: { p: Project }) {
@@ -55,7 +55,7 @@ export function Timeline() {
       <p className="label muted" style={{ margin: "34px 0 14px" }}>Hackathons</p>
       <div className="lines">
         {hackathons.map((e) => (
-          <div key={e.title + e.org}><span className="t">{e.title}</span><span className="o muted">{e.org}</span><span className="label muted">{e.when ?? ""}</span></div>
+          <div key={e.title + e.org}><span className="t">{e.title}{e.detail && <small className="d muted">{e.detail}</small>}</span><span className="o muted">{e.org}</span><span className="label muted">{e.when ?? ""}</span></div>
         ))}
       </div>
       <p className="label muted" style={{ margin: "34px 0 14px" }}>Conferences & recognition</p>
@@ -120,7 +120,7 @@ export function Moment() {
       <figure><img src={e.photo} alt={e.alt} decoding="async" /><figcaption>{e.caption}</figcaption></figure>
       <div>
         <p className="label muted">Moments · {e.when}</p>
-        <h2 className="display">Organising <span className="accent">CASA.</span></h2>
+        <h2 className="display"><Rise text="Organising" /> <span className="accent"><Rise text="CASA." delay={0.25} /></span></h2>
         <p className="lead">{e.detail}</p>
         <p className="label muted" style={{ marginTop: 16 }}>{e.org}</p>
       </div>

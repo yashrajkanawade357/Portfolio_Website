@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react"
 import { person } from "../data"
-import { useTitle } from "../components/ui"
+import { Rise, useTitle } from "../components/ui"
 import { Foot } from "./Home"
 
 type State = "idle" | "sending" | "sent" | "error"
@@ -40,7 +40,7 @@ export default function Contact() {
         <div className="contact-grid">
           <div>
             <p className="label muted">Contact</p>
-            <h1 className="display">Let's build something <span style={{ color: "#c79d00" }}>useful.</span></h1>
+            <h1 className="display"><Rise text="Let's build something" /> <span style={{ color: "#c79d00" }}><Rise text="useful." delay={0.45} /></span></h1>
             <div className="row">
               <a className="email" href={`mailto:${person.email}`}>{person.email.split("@")[0]}<wbr />@{person.email.split("@")[1]}</a>
               <button className="btn btn-ghost" onClick={copy} style={{ padding: "8px 14px" }}>{copied ? "Copied ✓" : "Copy"}</button>

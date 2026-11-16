@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { createPortal } from "react-dom"
 import { AnimatePresence, motion } from "motion/react"
 import { certificates, person } from "../data"
-import { useTitle } from "../components/ui"
+import { Rise, useTitle } from "../components/ui"
 import { Foot } from "./Home"
 
 export default function Archive() {
@@ -23,7 +23,7 @@ export default function Archive() {
   return (
     <>
       <section className="sec light" style={{ paddingTop: "max(64px, 7cqw)" }}>
-        <h1 className="display p-title" style={{ marginTop: 0 }}>Archive</h1>
+        <h1 className="display p-title" style={{ marginTop: 0 }}><Rise text="Archive" /></h1>
         <p className="label muted">Certificates · courses · hackathons</p>
         <p className="lead" style={{ margin: "14px 0 28px" }}>Every course finished and every hackathon entered, kept on one wall. Sixteen certificates and counting.</p>
         <div className="certs">
@@ -38,7 +38,7 @@ export default function Archive() {
       </section>
 
       <section className="sec dark cta">
-        <h2 className="display">Want the full story?</h2>
+        <h2 className="display"><Rise text="Want the full story?" /></h2>
         <a className="btn btn-pulse" href={person.linkedin} target="_blank" rel="noreferrer">See my LinkedIn ↗</a>
       </section>
       <Foot />

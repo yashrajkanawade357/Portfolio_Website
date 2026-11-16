@@ -175,19 +175,21 @@ export const experience = [
     detail: "Outreach and industry connects for the chapter." },
   { title: "Executive Core Member — Technical Domain", org: "E-Cell VIT", when: "Sep 2026 — now",
     detail: "Web development for E-Cell's sites and event platforms." },
+  { title: "AI/ML Trainee", org: "Unlox", when: "2026 · 5 months",
+    detail: "Five months of training in artificial intelligence architecture and model training (AI Job Bridge Program), ending with the AI Gym project." },
   { title: "Executive Core Member — Outreach & Design", org: "Bulls & Bears · VIT", when: "Dec 2025 — Sep 2026",
     detail: "Outreach and promotional design for the club." },
 ]
 
 // in the order he lists them; year only where we know it
-export const hackathons: { title: string; org: string; when?: string }[] = [
+export const hackathons: { title: string; org: string; when?: string; detail?: string }[] = [
   { title: "Google Solution Challenge", org: "Build with AI · Google × Hack2skill", when: "2026" },
   { title: "Vibe to Code", org: "Coding Ninjas × Google Developer Groups" },
-  { title: "Code2Create", org: "ACM · VIT" },
+  { title: "Code2Create", org: "ACM · VIT", detail: "Top 20 finalist: reached the final round." },
   { title: "Odoo Hackathon", org: "Odoo" },
   { title: "TCS Challenge", org: "TCS" },
   { title: "Adobe Hackathon", org: "Adobe" },
-  { title: "ForgeAI", org: "graVITas'26 · VIT × HCLTech", when: "2026" },
+  { title: "ForgeAI", org: "graVITas'26 · VIT × HCLTech", when: "2026", detail: "Semi-finalist: reached the top 30." },
   { title: "Smart India Hackathon", org: "Project Sindhu · PS SIH26015", when: "2026" },
   { title: "Cipher.cli", org: "Yantra'26 · ISTE VIT", when: "2026" },
   { title: "Build & Beyond", org: "Whitehats Club · VIT", when: "2026" },

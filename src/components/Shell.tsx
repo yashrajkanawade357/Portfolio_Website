@@ -1,13 +1,15 @@
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react"
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import {
-  AnimatePresence, animate, motion, useMotionTemplate, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll,
-  useSpring, useTransform, type MotionValue,
+  AnimatePresence, animate, motion, useAnimationFrame, useMotionTemplate, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll,
+  useSpring, useTransform, useVelocity, type MotionValue,
 } from "motion/react"
 import LockScreen from "./LockScreen"
 import { LaunchContext, type Launch } from "./launch"
 import { play, setSound, useSound } from "./sound"
 import { SignalContext } from "./secret"
+import { ScreenContext } from "./screen"
+import PhoneBack from "./PhoneBack"
 import { person } from "../data"
 import { useClock } from "./ui"
 
@@ -77,6 +79,10 @@ function geometry(w: number, h: number) {
   return { portrait, phone: false, W, H: Math.round(W * 0.64), b: 12, r: 30 }
 }
 
+/* each half of the phone is this thick; slabs between front and back make the edge solid when it turns */
+const DEPTH = 12
+const SLABS = [3, 6, 9]
+
 const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v))
 const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2)
 
@@ -128,6 +134,8 @@ export default function Shell({ children }: { children: ReactNode }) {
   const wake = useTransform(() => clamp((u.get() - 0.8) / 0.2))
   const contentY = useTransform(() => -clamp(s.get() - unfoldMV.get(), 0, distMV.get()))
   const lockY = useTransform(() => -heightMV.get() * 1.04 * ue.get())
+  const scrolled = useTransform(() => -contentY.get())
+  const screenCtx = useMemo(() => ({ scrolled, height: sh }), [scrolled, sh])
   const nameOpacity = useTransform(() => 1 - clamp(u.get() / 0.45))
   const nameRight = useTransform(() => u.get() * quarterMV.get())
   const nameLeft = useTransform(() => -u.get() * quarterMV.get())
@@ -171,6 +179,45 @@ export default function Shell({ children }: { children: ReactNode }) {
     document.documentElement.addEventListener("pointerleave", leave)
     return () => { window.removeEventListener("pointermove", move); document.documentElement.removeEventListener("pointerleave", leave) }
   }, [tilt, px, py])
+
+  // grab and spin: drag the background (or press Flip) to turn the phone around and see its back
+  const canSpin = !g.portrait
+  const spinY = useMotionValue(0)
+  const spinX = useMotionValue(0)
+  const rotY = useTransform(() => (tilt ? tiltY.get() : 0) + spinY.get())
+  const rotX = useTransform(() => (tilt ? tiltX.get() : 0) + spinX.get())
+  // folded, the phone only fills the right half of its box: turn it about its own middle, not the hinge
+  const pivot = useTransform(() => 0.5 + 0.25 * (1 - ue.get()))
+  const [flipped, setFlipped] = useState(false)
+  const [grabbing, setGrabbing] = useState(false)
+  const grab = useRef<null | { x: number; y: number; sy: number; sx: number }>(null)
+  const settleSpin = (target: number) => {
+    const spring = reduce ? { duration: 0 } : { type: "spring" as const, stiffness: 110, damping: 17 }
+    animate(spinY, target, spring)
+    animate(spinX, 0, spring)
+    setFlipped(Math.abs(Math.round(target / 180)) % 2 === 1)
+  }
+  const flip = () => { play("whoosh"); settleSpin((Math.round(spinY.get() / 180) + 1) * 180) }
+  const onGrab = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!canSpin || e.button !== 0) return
+    // the front of the phone stays clickable; its back and the empty stage are the handles
+    if ((e.target as HTMLElement).closest(".device") && !flipped) return
+    grab.current = { x: e.clientX, y: e.clientY, sy: spinY.get(), sx: spinX.get() }
+    try { e.currentTarget.setPointerCapture(e.pointerId) } catch { /* pointer already gone */ }
+    setGrabbing(true)
+  }
+  const onGrabMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const d = grab.current
+    if (!d) return
+    spinY.set(d.sy + (e.clientX - d.x) * 0.45)
+    spinX.set(clamp(d.sx - (e.clientY - d.y) * 0.25, -32, 32))
+  }
+  const onGrabEnd = () => {
+    if (!grab.current) return
+    grab.current = null
+    setGrabbing(false)
+    settleSpin(Math.round(spinY.get() / 180) * 180)
+  }
 
   // page transitions: slide in the direction of travel
   const prevPath = useRef(pathname)
@@ -292,7 +339,10 @@ export default function Shell({ children }: { children: ReactNode }) {
       </header>}
 
       <div className="track" style={{ height: vp.h + unfold + dist }}>
-        <div className="stage">
+        <div
+          className={`stage${canSpin ? " spinnable" : ""}${grabbing ? " grabbing" : ""}${flipped ? " flipped" : ""}`}
+          onPointerDown={onGrab} onPointerMove={onGrabMove} onPointerUp={onGrabEnd} onPointerCancel={onGrabEnd}
+        >
           {fold && !g.portrait && (
             <>
               <motion.div className="name" aria-hidden style={{ fontSize: nameSize, right: `calc(50% + ${g.W / 4 + 22}px)`, x: nameLeft, opacity: nameOpacity }}>{person.first}</motion.div>
@@ -303,7 +353,7 @@ export default function Shell({ children }: { children: ReactNode }) {
 
           <motion.div
             className="device"
-            style={{ width: g.W, height: g.H, x: g.portrait ? 0 : devX, scale: settle, ...(tilt ? { rotateX: tiltX, rotateY: tiltY } : {}) }}
+            style={{ width: g.W, height: g.H, x: g.portrait ? 0 : devX, scale: settle, ...(canSpin ? { rotateX: rotX, rotateY: rotY, originX: pivot } : {}) }}
             initial={{ y: 70 }}
             animate={{ y: 0 }}
             transition={{ type: "spring", bounce: 0.15, visualDuration: 0.9 }}
@@ -322,14 +372,17 @@ export default function Shell({ children }: { children: ReactNode }) {
                     <span className="side-btn" style={{ right: -3, top: "22%", height: 46 }} />
                     <span className="side-btn" style={{ right: -3, top: "32%", height: 28 }} />
                   </div>
+                  {SLABS.map((z) => <div key={z} className="slab" style={{ borderRadius: `0 ${g.r}px ${g.r}px 0`, transform: `translateZ(${-z}px)` }} />)}
+                  <PhoneBack radius={g.r} depth={DEPTH} />
                 </div>
                 {/* left half: swings on the hinge; its outside is the cover screen */}
                 <motion.div className="leaf" style={{ left: 0, width: g.W / 2, rotateY: leafRot, originX: 1, originY: 0.5 }}>
                   <div className="face" style={{ borderRadius: `${g.r}px 0 0 ${g.r}px` }}>
                     <div className="glass off" style={{ inset: `${g.b}px 0 ${g.b}px ${g.b}px`, borderRadius: `${g.r - g.b}px 0 0 ${g.r - g.b}px` }} />
                   </div>
-                  <div className="face back" style={{ borderRadius: g.r }} inert={open}>
-                    {fold && <LockScreen onUnfold={unfoldNow} style={lockStyle} hold={gate} />}
+                  {SLABS.map((z) => <div key={z} className="slab" style={{ borderRadius: `${g.r}px 0 0 ${g.r}px`, transform: `translateZ(${-z}px)` }} />)}
+                  <div className="face back" style={{ borderRadius: g.r, transform: `rotateY(180deg) translateZ(${DEPTH}px)` }} inert={open || flipped}>
+                    {fold ? <LockScreen onUnfold={unfoldNow} style={lockStyle} hold={gate} /> : <div className="glass off" style={lockStyle} />}
                     {fold && tilt && <Glare bg={glare} style={lockStyle} />}
                   </div>
                 </motion.div>
@@ -339,10 +392,11 @@ export default function Shell({ children }: { children: ReactNode }) {
             {/* the inner screen: wakes once the device is open */}
             <motion.div
               ref={screenRef}
-              className="screen"
-              style={{ left: g.b, top: g.b, width: sw, height: sh, borderRadius: g.r - g.b, opacity: g.portrait ? 1 : wake, pointerEvents: open || g.portrait ? "auto" : "none" }}
+              className="screen" inert={flipped}
+              style={{ left: g.b, top: g.b, width: sw, height: sh, borderRadius: g.r - g.b, opacity: g.portrait ? 1 : wake, pointerEvents: (open || g.portrait) && !flipped ? "auto" : "none" }}
             >
               <motion.div ref={contentRef} className="screen-content" style={{ y: contentY }} onFocus={onFocus}>
+                <ScreenContext.Provider value={screenCtx}>
                 <SignalContext.Provider value={setSignal}>
                 <LaunchContext.Provider value={launch}>
                   <AnimatePresence mode="wait" initial={false} custom={dir}>
@@ -355,6 +409,7 @@ export default function Shell({ children }: { children: ReactNode }) {
                   </AnimatePresence>
                 </LaunchContext.Provider>
                 </SignalContext.Provider>
+                </ScreenContext.Provider>
               </motion.div>
               {tilt && <Glare bg={glare} />}
               {tilt && <motion.div className="sweep" aria-hidden style={{ x: sweepX }} />}
@@ -410,6 +465,10 @@ export default function Shell({ children }: { children: ReactNode }) {
           {(Object.keys(FINISHES) as Finish[]).map((f) => (
             <button key={f} aria-label={FINISHES[f].label} aria-pressed={finish === f} style={{ background: FINISHES[f].frame }} onClick={() => setFinish(f)} />
           ))}
+          <button className="flip" onClick={flip} aria-pressed={flipped} title="Flip the phone, or drag the background to spin it">
+            <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8M21 3v5h-5M21 12a9 9 0 0 1-15.5 6.2L3 16M3 21v-5h5" /></svg>
+            <span>{flipped ? "Front" : "Flip"}</span>
+          </button>
         </div>
       )}
     </div>
@@ -520,18 +579,41 @@ function SceneLayer({ scene }: { scene: Scene }) {
           animate={{ x: [0, -70, 0], y: [0, -40, 0] }} transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }} />
       </div>
     )
-  if (scene === "orbit")
-    return (
-      <div className="scene" aria-hidden>
-        <svg className="orbit-svg" viewBox="-100 -100 200 200">
-          {[26, 40, 56, 74, 94].map((r, i) => (
-            <motion.g key={r} animate={{ rotate: i % 2 ? -360 : 360 }} transition={{ duration: 70 + i * 25, repeat: Infinity, ease: "linear" }}>
-              <circle r={r} fill="none" stroke="rgba(244,243,240,.09)" strokeWidth={0.18} />
-              <circle cx={r} cy={0} r={i === 2 ? 0.9 : 0.55} fill={i === 2 ? "#f5c518" : "rgba(244,243,240,.6)"} />
-            </motion.g>
-          ))}
-        </svg>
-      </div>
-    )
+  if (scene === "orbit") return <Orbit />
   return null
+}
+
+/* the orbit background: rings spin faster while you scroll and lean with the cursor */
+const RINGS = [26, 40, 56, 74, 94]
+function Orbit() {
+  const reduce = useReducedMotion()
+  const { scrollY } = useScroll()
+  const boost = useSpring(useTransform(useVelocity(scrollY), (v) => Math.min(Math.abs(v) / 260, 9)), { stiffness: 60, damping: 20 })
+  const angles = [useMotionValue(0), useMotionValue(0), useMotionValue(0), useMotionValue(0), useMotionValue(0)]
+  useAnimationFrame((_, dt) => {
+    if (reduce) return
+    const k = (Math.min(dt, 50) / 1000) * (1 + boost.get())
+    angles.forEach((a, i) => a.set(a.get() + (i % 2 ? -1 : 1) * (360 / (70 + i * 25)) * k))
+  })
+  const mx = useMotionValue(0), my = useMotionValue(0)
+  const rotateY = useSpring(mx, { stiffness: 40, damping: 16 })
+  const rotateX = useSpring(my, { stiffness: 40, damping: 16 })
+  useEffect(() => {
+    if (reduce || !matchMedia("(pointer: fine)").matches) return
+    const move = (e: PointerEvent) => { mx.set((e.clientX / window.innerWidth - 0.5) * 14); my.set((0.5 - e.clientY / window.innerHeight) * 10) }
+    window.addEventListener("pointermove", move)
+    return () => window.removeEventListener("pointermove", move)
+  }, [reduce, mx, my])
+  return (
+    <div className="scene orbit" aria-hidden>
+      <motion.svg className="orbit-svg" viewBox="-100 -100 200 200" style={{ rotateX, rotateY }}>
+        {RINGS.map((r, i) => (
+          <motion.g key={r} style={{ rotate: angles[i] }}>
+            <circle r={r} fill="none" stroke="rgba(244,243,240,.09)" strokeWidth={0.18} />
+            <circle cx={r} cy={0} r={i === 2 ? 0.9 : 0.55} fill={i === 2 ? "#f5c518" : "rgba(244,243,240,.6)"} />
+          </motion.g>
+        ))}
+      </motion.svg>
+    </div>
+  )
 }
