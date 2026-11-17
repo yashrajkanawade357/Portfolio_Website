@@ -102,6 +102,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .stage.flipped .device, .stage.grabbing, .stage.grabbing .device { cursor: grabbing; }
 .stage.flipped .device { cursor: grab; }
 .stage.grabbing { user-select: none; -webkit-user-select: none; }
+/* the lock screen and the back are objects to grab, not text to select */
+.lock, .face.rear, .name { user-select: none; -webkit-user-select: none; }
+.lock img { -webkit-user-drag: none; }
+.stage.spinnable .lock { cursor: grab; }
+.stage.spinnable .lock a, .stage.spinnable .lock button { cursor: pointer; }
 .stage-inner { position: relative; display: grid; place-items: center; transform-style: preserve-3d; }
 
 .name {

@@ -200,8 +200,12 @@ export default function Shell({ children }: { children: ReactNode }) {
   const flip = () => { play("whoosh"); settleSpin((Math.round(spinY.get() / 180) + 1) * 180) }
   const onGrab = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!canSpin || e.button !== 0) return
-    // the front of the phone stays clickable; its back and the empty stage are the handles
-    if ((e.target as HTMLElement).closest(".device") && !flipped) return
+    // handles: the empty stage, the back of the phone, and the lock screen (but not its links and buttons).
+    // The open screen stays fully clickable.
+    const t = e.target as HTMLElement
+    const onLock = !!t.closest(".lock") && !t.closest("a, button")
+    if (t.closest(".device") && !flipped && !onLock) return
+    window.getSelection()?.removeAllRanges()
     grab.current = { x: e.clientX, y: e.clientY, sy: spinY.get(), sx: spinX.get() }
     try { e.currentTarget.setPointerCapture(e.pointerId) } catch { /* pointer already gone */ }
     setGrabbing(true)
